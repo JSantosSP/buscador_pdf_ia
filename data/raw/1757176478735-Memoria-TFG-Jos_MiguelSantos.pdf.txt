@@ -1,0 +1,3912 @@
+id198165
+ 
+ 
+DEVELOPMENT OF A SYSTEM FOR PROPERTY
+DATA COLLECTION AND PROCESSING
+JOSÉ MIGUEL SANTOS PALOMERA
+Thesis supervisor
+JOSEP Mª MIRABENT RODRIGUEZ (OWIUS)
+Tutor: CARME QUER BOSOR (Department of Service and Information System Engineering)
+Degree
+Bachelor's Degree in Informatics Engineering (Software Engineering)
+Bachelor's thesis
+Facultat d'Informàtica de Barcelona (FIB)
+Universitat Politècnica de Catalunya (UPC) - BarcelonaTech
+27/06/2025
+ 
+
+Abstract 
+This project involves the development of a digital tool aimed at commercial analysis in 
+the real estate sector. The proposed system enables the organization of property 
+information and facilitates its analysis. To achieve this, data provided by two external 
+services are integrated, normalized, and stored in a database. Additionally, the system 
+includes a graphical interface for property management and more efficient analysis. 
+ 
+Resum 
+Aquest projecte consisteix en el desenvolupament d'una eina digital orientada a 
+l'anàlisi comercial en el sector immobiliari. El sistema proposat permet organitzar la 
+informació de les propietats i facilitar-ne l'anàlisi. Per a això, s'integren dades 
+proporcionades per dos serveis externs, que es normalitzen i s'emmagatzemen en una 
+base de dades. A més, el sistema incorpora una interfície gràfica per a la gestió de les 
+propietats i una anàlisi més eficient. 
+ 
+Resumen 
+Este proyecto consiste en el desarrollo de una herramienta digital orientada al análisis 
+comercial en el sector inmobiliario. El sistema propuesto permite organizar la 
+información de las propiedades y facilitar su análisis. Para ello, se integran datos 
+proporcionados por dos servicios externos, los cuales se normalizan y almacenan en 
+una base de datos. Además, el sistema incorpora una interfaz gráfica para la gestión 
+de propiedades y un análisis más eficiente. 
+ 
+1 
+
+Acknowledgments 
+First and foremost, I would like to express my sincere gratitude to the project 
+supervisor, Josep M.ª Mirabent, for giving me the opportunity to carry out this project 
+and for trusting me to manage and develop it in its entirety. His support and extensive 
+experience have been essential throughout the entire process. 
+ 
+Secondly, I am deeply thankful to the project tutor, Carme Quer, for her valuable 
+assistance during the demanding documentation process. Her corrections, 
+observations, and different perspectives have been key to achieving a clearer, more 
+complete, more structured, and more comprehensible presentation of the work. 
+ 
+Last but not least, I want to thank my family and colleagues, whose unconditional and 
+constant support has allowed me to reach this point, making this academic journey a 
+much more manageable and enriching experience. 
+ 
+ 
+2 
+
+Index 
+1. Introduction---------------------------------------------------------------------------------------------8
+ 
+1.1. Project context-----------------------------------------------------------------------------------8
+ 
+1.1.1. Context and Problem to be solved---------------------------------------------------8
+ 
+1.2. Goal-------------------------------------------------------------------------------------------------9
+ 
+1.3. Stakeholders------------------------------------------------------------------------------------10
+ 
+1.4. State of the Art---------------------------------------------------------------------------------11
+ 
+1.4.1. Existing solutions-----------------------------------------------------------------------11
+ 
+1.4.2. Justification------------------------------------------------------------------------------11
+ 
+1.5. Risks-----------------------------------------------------------------------------------------------11
+ 
+1.6. Methodology-----------------------------------------------------------------------------------12
+ 
+1.6.1. Monitoring tools and validation----------------------------------------------------12
+ 
+1.7. Organization of memory subtraction------------------------------------------------------14 
+2. Planning-------------------------------------------------------------------------------------------------16
+ 
+2.1. Description of tasks---------------------------------------------------------------------------16
+ 
+2.1.1. Project Management------------------------------------------------------------------16
+ 
+2.1.2. Development----------------------------------------------------------------------------17
+ 
+2.1.3. Documentation of the TFG-----------------------------------------------------------19
+ 
+2.2. Resources----------------------------------------------------------------------------------------20
+ 
+2.2.1. Human resources-----------------------------------------------------------------------20
+ 
+2.2.2. Material Resource----------------------------------------------------------------------20
+ 
+2.3. Estimates and the Gantt Diagram----------------------------------------------------------20
+ 
+3. Budget---------------------------------------------------------------------------------------------------23
+ 
+3.1. Identification and estimation of costs----------------------------------------------------23
+ 
+3.1.1. Staff costs--------------------------------------------------------------------------------23
+ 
+3.1.2. General costs and amortisation-----------------------------------------------------25
+ 
+3.1.3. Contingency------------------------------------------------------------------------------26
+ 
+3.1.4. Incidentals--------------------------------------------------------------------------------26
+ 
+3.1.5. Final budget------------------------------------------------------------------------------26
+ 
+4. Specification of requirements---------------------------------------------------------------------27
+ 
+4.1. Requirements collection process----------------------------------------------------------27
+ 
+4.2. Functional requirements---------------------------------------------------------------------27
+ 
+4.3. Non functional requirements---------------------------------------------------------------28
+ 
+4.4. Conceptual Data Model----------------------------------------------------------------------29
+ 
+4.5. User Stories Description---------------------------------------------------------------------32
+ 
+5. System architecture----------------------------------------------------------------------------------35
+ 
+3 
+
+5.1. Physical architecture--------------------------------------------------------------------------35
+ 
+5.2. Logical architecture---------------------------------------------------------------------------36
+ 
+5.2.1. VPS web server logical architecture-----------------------------------------------37 
+5.2.2. Client web logical architecture------------------------------------------------------38
+ 
+5.3. Examples of sequence diagrams-----------------------------------------------------------40
+ 
+5.4. Used patterns-----------------------------------------------------------------------------------41
+ 
+5.4.1. MVC (Model - View - Controller)---------------------------------------------------41
+ 
+5.4.2. Feature-Based Architecture----------------------------------------------------------42
+ 
+5.4.3. Smart/Dumb Component------------------------------------------------------------42
+ 
+5.5. Database: Logical Design---------------------------------------------------------------------44
+ 
+5.6. Database: Physical Design-------------------------------------------------------------------47
+ 
+5.7. Interface Design--------------------------------------------------------------------------------49
+ 
+5.7.1. Properties--------------------------------------------------------------------------------49
+ 
+5.7.2. Pipeline-----------------------------------------------------------------------------------50
+ 
+5.7.3. Pipeline Status--------------------------------------------------------------------------51
+ 
+5.7.4. Configuration----------------------------------------------------------------------------52
+ 
+6. Implementation---------------------------------------------------------------------------------------53 
+6.1. Technologies and languages   used--------------------------------------------------------53 
+6.1.1. Backend developed with Node.js and Express.js------------------------------53 
+6.1.2. NoSQL database using MongoDB-------------------------------------------------53 
+6.1.3. Frontend built with React.js----------------------------------------------------------53 
+6.1.4. Additional frontend technologies---------------------------------------------------53 
+6.2. Development tools-----------------------------------------------------------------------------54 
+6.2.1. Visual Studio Code---------------------------------------------------------------------54 
+6.2.2. Postman----------------------------------------------------------------------------------54 
+6.2.3. Windows PowerShell------------------------------------------------------------------54 
+6.2.4. Google Chrome-------------------------------------------------------------------------54 
+6.3. Relevant aspects of the code implementation------------------------------------------55 
+6.3.1. Implementation of API Endpoints--------------------------------------------------55 
+6.3.2. Implementation of data processing------------------------------------------------56 
+6.3.3. Implementation of the duplicate detection process----------------------------63 
+7. Testing---------------------------------------------------------------------------------------------------70 
+7.1. Postman------------------------------------------------------------------------------------------70 
+7.2. Google Chrome--------------------------------------------------------------------------------71 
+7.3. Tests performed by SetHome---------------------------------------------------------------72 
+8. Project execution------------------------------------------------------------------------------------73 
+8.1. Task Tracking with Asana--------------------------------------------------------------------73 
+8.2. Planning and Budget Changes-------------------------------------------------------------74 
+8.3. Level of satisfaction of requirements-----------------------------------------------------77 
+9. Legal aspects-------------------------------------------------------------------------------------------81
+ 
+9.1. Laws applicable to the project--------------------------------------------------------------81
+ 
+9.2. Licenses------------------------------------------------------------------------------------------82
+ 
+4 
+
+10. Sustainability-----------------------------------------------------------------------------------------83
+ 
+10.1. Economic---------------------------------------------------------------------------------------83
+ 
+10.2. Environmental--------------------------------------------------------------------------------84
+ 
+10.3. Social--------------------------------------------------------------------------------------------85
+ 
+11. Conclusions and future work------------------------------------------------------------------86 
+11.1. Technical skills worked on------------------------------------------------------------------86 
+11.2. TFG’s connection to the degree and specialization---------------------------------87 
+11.3. Personal conclusions------------------------------------------------------------------------88 
+11.4. Future work------------------------------------------------------------------------------------89 
+References------------------------------------------------------------------------------------------------90 
+Appendixes-----------------------------------------------------------------------------------------------92 
+ 
+5 
+
+Index of Figures 
+ 
+Figure 1: Asana screenshot----------------------------------------------------------------------------12 
+Figure 2: Slack screenshot-----------------------------------------------------------------------------13 
+Figure 3: Bitbucket screenshot-----------------------------------------------------------------------13 
+Figure 4: Gantt Diagram--------------------------------------------------------------------------------22 
+Figure 5: Conceptual Data Model--------------------------------------------------------------------31 
+Figure 6: Physical architecture------------------------------------------------------------------------36 
+Figure 7: Logical architecture-------------------------------------------------------------------------36 
+Figure 8: API Design with MVC Pattern------------------------------------------------------------38 
+Figure 9: Backoffice Design----------------------------------------------------------------------------39 
+Figure 10: Backoffice sequence diagram-----------------------------------------------------------40 
+Figure 11: Backend sequence diagram-------------------------------------------------------------41 
+Figure 12: Smart component example-------------------------------------------------------------43 
+Figure 13: Dumb component example-------------------------------------------------------------44 
+Figure 14: Properties Interface Design-------------------------------------------------------------50 
+Figure 15: Pipeline Interface Design----------------------------------------------------------------51 
+Figure 16: Status Properties Interface Design----------------------------------------------------51 
+Figure 17: Configuration Interface Design---------------------------------------------------------52 
+Figure 18: Code used to download data-----------------------------------------------------------57 
+Figure 19: Code used to update or create a new property—--------------------------------58 
+Figure 20: Code used to get values associated with specific terms-------------------------59 
+Figure 21: The property image shown by the seller--------------------------------------------62 
+Figure 22: Google Maps image showing the resulting location-----------------------------62 
+Figure 23: Image showing that it is the same property----------------------------------------62 
+Figure 24: Code used to filter potential properties---------------------------------------------63 
+Figure 25: Code used to calculate score between properties--------------------------------64 
+Figure 26: Incoming property image----------------------------------------------------------------69 
+Figure 27: Existing property Image------------------------------------------------------------------69 
+Figure 28: Testing Process Flow----------------------------------------------------------------------70 
+Figure 29: Using Postman example-----------------------------------------------------------------71 
+Figure 30: Using DevTools example-----------------------------------------------------------------72 
+Figure 31: Using Asana example---------------------------------------------------------------------73
+6 
+
+Index of Tables 
+Table 1: Tasks summary--------------------------------------------------------------------------------21 
+Table 2: Salary--------------------------------------------------------------------------------------------24 
+Table 3: Cost per task-----------------------------------------------------------------------------------24 
+Table 4: Resource----------------------------------------------------------------------------------------25 
+Table 5: Amortisation-----------------------------------------------------------------------------------25 
+Table 6: Contingency------------------------------------------------------------------------------------26 
+Table 7: Incident------------------------------------------------------------------------------------------26 
+Table 8: Budget-------------------------------------------------------------------------------------------26 
+Table 9: Properties endpoints------------------------------------------------------------------------55 
+Table 10: Pipelines endpoints------------------------------------------------------------------------56 
+Table 11: Notifications endpoints-------------------------------------------------------------------56 
+Table 12: Configuration endpoints------------------------------------------------------------------56 
+Table 13: Fields, Methods, and Normalization implemented in the Process------------65 
+Table 14: The Project final deviation---------------------------------------------------------------74 
+Table 15: The budget Project final deviation-----------------------------------------------------76 
+Table 16: Levels of achievement of functional requirements--------------------------------79 
+Table 17: Levels of achievement of non-functional requirements--------------------------80 
+ 
+ 
+ 
+7 
+
+1. Introduction 
+This project is a Bachelor's Final Degree Project from the Faculty of Informatics of 
+Barcelona (FIB) at the Universitat Politècnica de Catalunya (UPC), focused on the 
+Software Engineering specialization. It is a project developed under modality B, as an 
+internship agreement between UPC and the company Owius Technologies S.L. 
+ 
+1.1. Project context 
+This project is being carried out at Owius Technologies S.L., where I work. The 
+company specializes in custom software development, third-party services integration, 
+and the creation of API systems, DevOps services, and custom technology solutions to 
+meet each client's needs. Currently, I am working with a real estate client, which I will 
+call SetHome for confidentiality reasons, who is looking to have a better analysis of the 
+real estate market in the areas where their office staff works.   
+1.1.1. Context and Problem to be solved 
+Nowadays, the Internet has become the world's showcase. With just a few clicks, it is 
+possible to buy or sell almost anything, from second-hand furniture to whole buildings. 
+This fact has driven the rise of platforms dedicated to the purchase and sale of real 
+estate, such as Idealista, Fotocasa, Habitaclia, etc., which allow users to find properties 
+that would otherwise be very difficult to discover. From now on, every time the word 
+“platforms” is mentioned, it refers to these online platforms. 
+Although these platforms have revolutionized the world of real estate sales and 
+purchases, they are also creating significant challenges for the agencies working in this 
+sector, including the agency SetHome. The main challenge they are facing is reaching 
+further distances, since many potential clients may find  platforms like Idealista[1] more 
+appealing than a local real estate agency from a town far from them. Despite SetHome 
+marketing efforts, they are losing many clients who choose to list their properties on 
+such platforms. 
+SetHome’s goal is to analyze the marketplace. As the agency is located in Alella, a 
+municipality in the El Maresme region with only 10.200 inhabitants [2], is to analyze the 
+market of real estate in the area of Masnou, Alella, or Tiana to Montgat, Premià, or 
+8 
+
+Vilassar, this analysis will allow SetHome to take strategic decisions on the areas 
+where they seek for new clients.   
+This project mainly consists of the development of a system automating the linkage 
+between real estate data (from now on, referred to as properties) that come from 
+selling advertisements and the cadastre [3] records, both provided by external 
+companies. The cadastre is an official system that records the owners of land and of 
+the amount and value of the land they own. The linking of the data given by the 
+different sources and  its presentation to SetHome’s managers and staff will benefit 
+SetHome from market analysis capabilities and increase the information about areas 
+and zones of more interest and value.
+ 
+1.2. Goal 
+This section details the main goal and the subgoals that are sought to be achieved with 
+the implementation of the project.  
+This project aims to develop an automated system that imports property data provided 
+by a services company, links these properties with the cadastre information provided by 
+another external company, stores the cleaned data in the database and ultimately 
+presents the final results to the managers through the SetHome's backoffice. 
+The subgoals of this project are listed below: 
+● Integrate a third-party service that provides information about properties: 
+○ Abstract the relevant information about these properties. 
+● Compare and associate the data extracted by the system with the cadastre data 
+provided by an external company: 
+○ Assign to each property extracted a list of possible real addresses of the 
+property, at best, only one address corresponds to each property. 
+● Display the data collected at the client’s backoffice, and allow the SetHome 
+users the management of this data. SetHome’s managers must be able to: 
+○ Verify that the final data collected correctly corresponds to the assigned 
+address. 
+○ Edit the information of the collected properties. 
+○ See the general information of properties. 
+9 
+
+1.3. Stakeholders 
+Stakeholders in software development projects are individuals or groups with interest 
+or influence over the project's success, including clients, users, developers, and 
+investors. The stakeholders for this project are described below.  
+Software Developer:  
+Responsible for designing, developing, implementing, and documenting the system. In 
+this project I am the software developer and a stakeholder in the project because the 
+fact that it ends successfully affects me in different aspects, on one side as a worker of 
+the company that is in charge of the project may affect on my professional reputation 
+and potential promotions, on the other hand, since the project is my TFG its result may 
+affect to the completion of the TFG, and finally it may impact my final grade and 
+graduation prospects. 
+TFG Director:  
+The project director, Josep M. Mirabent, the CEO of Owius, is responsible for leading 
+and overseeing the development of the TFG project to ensure that the established 
+objectives are met. He is a stakeholder of the project because he is responsible for 
+meeting the client's expectations and delivering results. So he has a vested interest in 
+completing the project. 
+TFG Tutor:  
+The tutor of this final degree project, Carme Quer, is responsible for the academic 
+guidance of the project and its proper completion. She is a stakeholder of the project 
+because in her work as a teacher, the fact that a TFG ends successfully is also a 
+positive thing due to her academic responsibility. 
+SetHome Agents:  
+The SetHome agents will be the primary users of the system, utilizing the platform to 
+know about the market of properties and sales. They are stakeholders of the project 
+because their daily workflow and business growth will be helped with the platform’s 
+functionality and reliability. 
+10 
+
+1.4. State of the Art 
+1.4.1. Existing solutions 
+The client SetHome wants a solution that is not currently available on the market due to 
+its highly specific needs. It requires software that integrates with its backoffice to 
+visualize the data, extracts information from properties in the areas of interest, and 
+compares the obtained data with its cadastre records. 
+1.4.2. Justification 
+SetHome has decided to contract a third-party service to provide property information. 
+In addition, SetHome has contracted another third-party service to make cadastre data 
+available, enabling comparison between both datasets in the backend. The results are 
+stored in the database, which facilitates the creation of endpoints that make the 
+information accessible to the backoffice, allowing SetHome staff to view and edit it. 
+1.5. Risks 
+There is a possibility of risks affecting the project's functionality. Likewise, obstacles 
+may surface throughout its execution. 
+Inexperience with third-party services technologies  
+● Developers' lack of familiarity with third-party services may cause project 
+delays. 
+Changes in the platform structure 
+● If the third-party service changes the structure of the information, the integration 
+with this service would need to be re-done. 
+Scarcity of property information  
+● If the data collected from service is insufficient to identify properties in the 
+cadastre, the solution will need to be reconsidered. 
+Task rectification 
+● If tasks are not properly specified, they may need to be re-done in the future. 
+11 
+
+1.6. Methodology 
+For this project, an adaptation of the Kanban[4] methodology has been chosen. This 
+methodology consists of creating a board with different tasks, each one represented as 
+a card. These cards move across predefined columns that reflect different stages of 
+completion of the task represented by the card. By limiting the number of tasks in 
+progress at any given time, Kanban ensures a steady workflow and helps maintain 
+focus on delivering value. In this particular adaptation, the board is divided into four 
+columns: Backend and Backoffice, which contain tasks related to the development of 
+the backend system and the internal management interface respectively, a Doing 
+column that holds tasks currently in progress, and a Done column that collects 
+completed tasks. This structure improves workflow visualization and helps categorize 
+work more effectively based on the nature and status of each task. 
+ 
+ 
+Figure 1: Asana screenshot. Source: Own elaboration. 
+The reason for choosing this methodology is that it adapts very well to the need for 
+great flexibility when changing objectives and allows for shorter task cycles. 
+Additionally, it does not require as rigid a structure as Scrum, making it a great fit for 
+projects handled by a single person, as it allows for a more fluid and self-managed 
+workflow. 
+1.6.1. Monitoring tools and validation 
+To implement this methodology, the developer and the project director hold daily 
+meetings to monitor the workflow, as WIP (Work In Progress) is not explicitly defined. 
+Additionally, meetings will be held with the owner of the product to clarify doubts and 
+objectives. Various tools are used to validate that the objectives are met. 
+● Slack[5] is used for communication between team members, specifically 
+between the team lead and the developer. 
+12 
+
+ 
+Figure 2: Slack screenshot. Source: Own elaboration. 
+● Asana[6] is used as a Kanban board tool to manage the project visually and 
+efficiently. It has a board where two columns (Backend and Backoffice) 
+represent the To Do section. There is also a Doing column and a Done column 
+to improve workflow transparency. Additionally, a Documentation column is 
+added, containing cards with relevant project information. This column is 
+created for the programmer's convenience, allowing quick access to documents 
+throughout the project. 
+● Bitbucket[7] is used for version control. The version control strategy is based 
+on a simple and effective workflow that allows you to maintain clean and 
+well-documented code. The project is organized into two main repositories: 
+Backend and Backoffice. 
+Each completed task is uploaded to the main branch with a commit. 
+The commit message contains a description, explaining what has been 
+implemented or fixed. If a task is long, it is divided into multiple partial commits, 
+indicating in each message which part has been completed. 
+ 
+Figure 3: Bitbucket screenshot. Source: Own elaboration. 
+13 
+
+1.7. Organization of memory subtraction 
+The rest of the report is structured into several chapters that clearly and systematically 
+present the development of the project. Below is a description of each chapter's 
+content: 
+● Chapter 2 – Planning: This chapter outlines the project’s planned timeline, 
+specifying the tasks carried out, their estimated and actual durations, as well as 
+the required human and material resources. It also includes Gantt charts and a 
+detailed description of each task. 
+● Chapter 3 – Budget: This section analyzes the project costs, both in terms of 
+personnel and material resources. It also includes costs arising from 
+unforeseen events, amortizations, and contingencies, along with an estimate of 
+the total cost. 
+● Chapter 4 – Requirements Specification: Here, the system’s functional and 
+non-functional requirements are presented, along with the process followed to 
+define them. User stories and the conceptual data model are also included. 
+● Chapter 5 – System Architecture: This chapter describes the physical and 
+logical architecture of the system, including design patterns used, sequence 
+diagrams, the structure of the backend and backoffice, and database design. 
+● Chapter 6 – Implementation: This section details the most relevant technical 
+aspects of the system's implementation, such as the technologies used, tools 
+applied, and key code snippets. 
+● Chapter 7 – Testing: The different types of tests carried out are explained, 
+including how they were conducted and the results obtained. 
+● Chapter 8 – Project Execution: This chapter analyzes deviations from the 
+initial plan, the degree to which requirements were met. Each requirement’s 
+fulfillment level is evaluated. 
+● Chapter 9 – Legal Aspects: Applicable laws concerning data protection and 
+software licensing are discussed, as well as the legal implications of using 
+third-party services. 
+14 
+
+● Chapter 10 – Sustainability: This section reflects on the project’s economic, 
+environmental, and social impact, and how these aspects were considered 
+throughout development. 
+● Chapter 11 – Conclusions and future work: General project conclusions, 
+lessons learned, and potential areas for improvement or future development are 
+presented. 
+● References: All sources of information used during the project’s development 
+are listed. 
+● Appendix: Additional material is provided to enhance understanding of the 
+application. 
+ 
+ 
+15 
+
+2.  Planning 
+The Project is developed under modality B (external company). It takes place between 
+February 20th and the end of June. It has an approximate duration of 540 hours 
+distributed over 90 working days. It is planned to dedicate around 6 hours per day, 
+combining work at the company with additional tasks at home. In addition, every Friday, 
+a 30-minute time slot will be reserved for a meeting (MT), if needed, allowing 
+discussions on whether ensuring objectives requires managing changes, re-planning, 
+or re-estimating tasks, as well as other possible topics. 
+This schedule is based on the academic workload of the Final Degree Project, which 
+consists of 18 credits, equivalent to a total of 540 hours of dedication (30 hours per 
+credit). 
+The initial planning presented in this section serves as a general guide for the expected 
+workload and task distribution. However, it is important to note that the actual execution 
+of the project may differ from this initial estimation. A detailed breakdown of the real 
+execution, including the total hours invested per task and the tasks actually completed, 
+will be documented in the final chapter of the report, titled Project Execution. 
+2.1. Description of tasks 
+2.1.1. Project Management 
+Context and scope of the project 
+● PM1 - Define context and scope 
+The documentation defining the project's context and problem is written, the scope is 
+determined, and the methodology to be used is decided. This task takes 24 hours to 
+complete. Dependence: none. 
+Time planning 
+● PM2 - Define time planning 
+The tasks required to carry out the project are planned, estimating the necessary time 
+for each one. A Gantt chart is created to visually present the development plan. This 
+task takes 22 hours to complete. Dependence: PM1. 
+ 
+16 
+
+Budget and sustainability 
+● PM3 - Make budget and sustainability report 
+The costs of each phase are identified and determined. Mechanisms for controlling 
+budget deviations are described. Additionally, a sustainability report is written. This task 
+takes 18 hours to complete. Dependence: PM2. 
+Final document 
+● PM4 - Prepare final document 
+The contents of all previously created documents will be integrated, correcting issues 
+or redefining sections to ensure greater clarity. This task takes 26 hours to complete. 
+Dependence: PM3. 
+2.1.2. Development 
+For all programming tasks, it is important to keep in mind that they include a testing 
+period, even if it is not explicitly specified in the tasks. Because independent testing 
+tasks are not considered during the process, testing must be carried out while new 
+features are being developed.  
+Inception 
+● I1 - Requirement specification 
+The necessary requirements that the project must meet are defined in detail by holding 
+various meetings or staying in contact via email with the client SetHome to better 
+understand their needs. This task takes 15 hours to complete. Dependency: PM4. 
+● I2 - Database Design 
+The existing database is analyzed to review the current data, and decisions are made 
+on which tables to add to manage the new information that will be stored. This task 
+takes 8 hours to complete. Dependency: I1. 
+● I3 - Setup and Learning the Service Functionality 
+The contracted service is configured to allow access via its API, and its functionality is 
+studied. Additionally, the feasibility of continuing with this service for system integration 
+is evaluated. This task takes 15 hours to complete. Dependency: I2. 
+Data collection 
+● D1 - Selection of locations 
+17 
+
+The necessary logic is added to determine which locations the client is interested in 
+downloading. Both the backoffice and backend must be modified to manage this new 
+information. This task takes 6 hours to complete. Dependency: I4. 
+● D2 - Requesting Data from the Service and Analysis 
+Develop a backend process to initiate the download for the selected locations and 
+retrieve the obtained data. Analyze the collected data and determine how to compare it 
+with cadastre data. This task takes 30 hours to complete. Dependency: D1. 
+● D3 - Storing the Data 
+Adapt the data model designed in task I2 for a property to the obtained data and add 
+the storage logic into the process created in task D2, without normalization. This task 
+takes 8 hours to complete. Dependency: I2, D2. 
+Data Processing 
+● P1 - Data Normalization 
+Create a process to normalize the data obtained from service and store it in the 
+database. Modify the process created in task D3 to incorporate this normalization step, 
+replacing the direct data storage with the normalized version. This task takes 40 hours 
+to complete. Dependency: D3. 
+Comparison with cadastre Data 
+● C1 - Implement Logic 
+Create a process that selects the possible cadastre properties that resemble a given 
+property. Retrieve the address of each of these properties and assign them to the 
+property in question. Add this process to the normalization step performed in task P1. 
+This task takes 40 hours to complete. Dependency: P1. 
+Data Visualization 
+● V1 - Implement Views to Manage Properties 
+Create the logic to manage CRUD operations for a property in the backend and 
+backoffice. This task takes 18 hours to complete. Dependency: P1. 
+● V2 - Implement Functionality Related to Property Addresses 
+Create the logic to display the address on Google Maps and delete addresses from the 
+backoffice. This task takes 12 hours to complete. Dependency: C1. 
+● V3 - Implement Modal to View cadastre Data 
+18 
+
+Create the logic to display cadastre data from the assigned address of each property in 
+the backoffice. This task takes 18 hours to complete. Dependency: C1. 
+● V4 - Implement Component for Quick Property View 
+Create a sidebar to view more details of a property. This task takes 20 hours to 
+complete. Dependency: P1. 
+● V5 - Implement Property Filter 
+Create a filter by different categories in the backoffice. This task takes 10 hours to 
+complete. Dependency: V1. 
+Management Features 
+● F1 - Assign Users to Properties 
+Create all the logic needed to assign users to properties. Includes adding a filter by the 
+assigned user in the backoffice. This task takes 10 hours to complete. Dependency: 
+V1,V5. 
+● F2 - Add Button to Download Excel 
+Create the logic to download an Excel file for the selected properties. This task takes 
+25 hours to complete. Dependency: V1. 
+● F3 - Implementing functionality related to managing property states 
+Create the logic and UI to manage property states. This task takes 12 hours to 
+complete. Dependency: V1. 
+● F4 - Implementation of Notifications for the User 
+Develop the logic and user interface to manage notifications. This task is estimated to 
+take 12 hours to complete. Dependency: V1. 
+Automation 
+● A1 - Automate the Process 
+Search for and implement a Node.js library to launch the automatic download process. 
+This task takes 20 hours to complete. Dependency: D2. 
+● A2 - Update Downloading and Cadastre Data 
+Modify the logic for importing cadastre data so that the downloading process is 
+triggered once it is updated. This task takes 4 hours to complete. Dependency: C1. 
+2.1.3. Documentation of the TFG 
+● DT - Documentation and Tracking 
+19 
+
+A report is created for the project that documents the entire development process. In 
+addition, meetings are held with the supervisor to track progress and resolve any 
+issues. In addition, the time spent preparing the oral presentation is also taken into 
+account. As this task is transversal and occurs throughout all stages of the project, it is 
+possible to accumulate 120 hours. Dependency: None. 
+2.2. Resources 
+2.2.1. Human resources 
+● T - Carme Quer Bosor  
+The Final Degree Project Tutor's job is to guide the student throughout the 
+specification, documentation, and presentation tasks, ensuring that the project meets 
+the agreed-upon specifications set at the beginning. 
+● D - Josep Mª Mirabent Rodriguez 
+The Project Director's job is to oversee the development of programming tasks, 
+identifying relevant tasks and assisting in decision-making regarding critical aspects of 
+the process. 
+● A - Jose Miguel Santos Palomera 
+The sole developer of the project and Final Degree Project student is responsible for 
+successfully completing all assigned tasks and documenting the process. 
+2.2.2. Material Resource 
+● PC - Laptop 
+Computer used by the developer for programming and documentation tasks. Its 
+specifications include an Intel i7 processor, 16GB of RAM, and Windows 11 Home as 
+the operating system. It has Visual Studio Code installed. This setup allows the 
+developer to host the project locally for testing purposes. 
+2.3. Estimates and the Gantt Diagram 
+The following table summarizes the tasks explained above, to have a clear 
+visualization of the dependencies between them and the estimated time that is 
+expected to be in each of them. Additionally, the table includes a column detailing the 
+necessary resources for each task, such as personnel or tools, which allows for a more 
+comprehensive understanding of the project's requirements.  
+20 
+
+This information will also be useful in the following chapter, where both the time 
+estimations and the required resources will be used to estimate the overall budget of 
+the project. 
+Table 1: Tasks summary. 
+21 
+Code Title Time(h) Dependence Resource 
+PM1 Define context and scope 24 - PM 
+PM2 Define time planning 22 PM1 PM 
+PM3 Make budget and sustainability report 18 PM2 PM 
+PM4 Prepare final document 26 PM3 PM 
+I1 Requirement specification 15 PM4 PM 
+I2 Database Design 8 I1 PM 
+I3 
+Setup and Learning the Service 
+Functionality 
+15 I3 
+DB, 
+Service, Bitbucket 
+D1 Selection of locations 6 I4 
+DB, FD, QA, 
+Bitbucket 
+D2 
+Requesting Data from the Service and 
+Analysis 
+30 D1 
+PM,DB, 
+Service, Bitbucket 
+D3 Storing the Data 8 I2, D2 DB, Bitbucket 
+P1 Data Normalization 40 D3 DB, Bitbucket 
+C1 Implement Logic 40 P1 
+DB, 
+Service, Bitbucket 
+V1 Implement Views to Manage Properties 18 C1 
+DB, FD, QA, 
+Bitbucket 
+V2 
+Implement Functionality Related to 
+Property Addresses 
+12 C1 
+DB, FD, QA, 
+Bitbucket 
+V3 Implement Modal to View cadastre Data 18 P1 
+DB, FD, QA, 
+Bitbucket 
+V4 
+Implement Component for Quick 
+Property View 
+20 P1 
+FD, QA, 
+Bitbucket 
+V5 Implement Property Filter 10 V1 
+FD, QA, 
+Bitbucket 
+F1 Assign Users to Properties 10 V1, V5 
+DB, FD, QA, 
+Bitbucket 
+F2 Add Button to Download Excel 25 V1 
+DB, FD, QA, 
+Bitbucket 
+F3 
+Implementing functionality related to 
+managing property states 
+12 V1 
+DB, FD, QA, 
+Bitbucket 
+F4 
+Implementation of Notifications for the 
+User 
+12 V1 
+DB, FD, QA, 
+Bitbucket 
+A1 Automate the Process 20 D2 
+DB, 
+Bitbucket 
+A2 Update Downloading and Cadastre Data 4 C1 
+DB, FD, QA, 
+Bitbucket 
+DT Documentation and Tracking 120 - PM, DB, FD, QA 
+MT Meeting 7 - PM, DB, FD, QA 
+ Total hours 540   
+
+Below is the Gantt chart, a project management tool that provides a graphical 
+representation of the project’s task schedule. It is displayed as a table with horizontal 
+bars, where each bar indicates the duration of a project task.  
+This type of chart helps identify task dependencies and track the project's progress, 
+supporting a clear and organized view of the work required to complete the project. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 4: Gantt Diagram. Source: Own elaboration. 
+ 
+22 
+
+3. Budget  
+The budget presented in this chapter is an initial estimate based on expected 
+resources, working hours, and possible unexpected expenses. It includes staff costs, 
+general expenses, amortisation, contingency, and incidentals. However, the final cost, 
+reflecting the actual hours invested in each task and the real resources used, will be 
+included at the end of the project, in the Project Execution chapter. 
+3.1. Identification and estimation of costs 
+After conducting a thorough forecast of tasks and deadlines over time, it is now time to 
+calculate the financial costs of the project. 
+It is important to keep in mind that, in a project, costs arise directly, either through the 
+purchase of necessary hardware or software for development or through salaries and 
+taxes that must be paid for employees carrying out each task. Additionally, there are 
+indirect costs, such as office expenses or asset depreciation. 
+3.1.1. Staff costs 
+In this project, the tasks are more focused on the backend, and the UX aspect for the 
+client is not a priority. Additionally, the database is already set up, so the only task is to 
+integrate a new collection with its respective relationships. 
+For this reason, only the following roles are needed: 
+● A Project Manager, responsible for making key decisions and handling general 
+project documentation. 
+● A Backend Developer, in charge of integrating the new collection and carrying 
+out all backend-related tasks. 
+● A Frontend Developer, who will perform the necessary tasks to integrate the 
+new functionalities into the existing back office. 
+● A QA Tester, who will test the features as the frontend completes tasks, 
+ensuring they are finished correctly or providing feedback to developers to 
+correct any potential issues. 
+To estimate the cost of each worker, the average hourly salary in Spain has been 
+researched on Talent.com [8], and the results are as follows: 
+23 
+
+Role Cost/hour Cost/hour + SS People 
+Project Manager 17.95 23.34 1 
+Backend Developer 22.38 29.09 1 
+Frontend Developer 20 26.00 1 
+QA Tester 14.62 19.01 1 
+A table showing the gross salary, then applying the 30% Social Security contribution, and finally the 
+number of workers in that role. 
+Table 2: Salary 
+Now that the estimated salary for each role is determined, it is necessary to calculate 
+how many hours each person will work per task. This will provide an estimate of the 
+total project cost in relation to employee salaries. 
+Description Hour PM BD FD QA 
+Cost (€) Total (€) 
+PM1 - Define context and scope 24 24.00    560.16 
+2,100.60 
+PM2 - Define time planning 22 22.00    513.48 
+PM3 - Make budget and sustainability 
+report 18 18.00    420.12 
+PM4 - Prepare final document 26 26.00    606.84 
+I1 - Requirement specification 15 15.00    350.1 
+973.17 
+I2 - Database design 8 8.00    186.72 
+I3 - Setup and learning service 
+functionality 15  15.00   436.35 
+D1 - Selection of locations 6  3.00 2.00 1.00 158.28 
+1,234.95 
+D2 - Requesting Data from the Service 
+and Analysis 30 5.00 25.00   843.95 
+D3 - Storing the Data 8  8.00   232.72 
+P1 - Data normalization 40  40.00   1163.6 1,163.60 
+C1 - Implement logic 40  40.00   1163.6 1,163.60 
+V1 - Implement views to manage 
+properties 
+18  2.00 14.00 2.00 460.2 
+1,966.56 
+V2 - Implement Functionality Related to 
+Property Addresses 
+12  2.00 8.00 2.00 304.2 
+V3 - Implement Modal to View Cadastre 
+Data 
+18  1.00 15.00 2.00 457.11 
+V4 - Implement Component for Quick 
+Property View 
+20   18.00 2.00 506.02 
+V5 - Implement property filter 10   7.00 3.00 239.03 
+F1 - Assign users to properties 10  3.00 5.00 2.00 255.29 
+1,573.87 
+F2 - Add Button to Download Excel 25  20.00 3.00 2.00 697.82 
+F3 - Implementing functionality related 
+to managing property states 
+12  4.00 6.00 2.00 310.38 
+24 
+
+F4 - Implementation of Notifications for 
+the User 12  4.00 6.00 2.00 310.38 
+A1 - Automate the process 20  20.00   581.8 
+690.03 
+A2 - Update downloading and cadastre 
+data 4  2.50 1.00 0.50 108.23 
+DT - Documentation and tracking 120 42.00 32.00 23.00 23.00 2,946.39 2,946.39 
+MT - Meeting 7 7.00 7.00 7.00 7.00 682.08 682.08 
+Total hours of the project 540 
+ 14,494.85 Total human cost of the project  
+ 
+Show the number of hours for each role, the cost per task, and the group cost are displayed 
+Table 3: Cost per task 
+3.1.2. General costs and amortisation 
+In every project, general expenses related to the resources used to carry it out must 
+also be considered. In this case, office expenses, third-party service costs, and the 
+depreciation of the laptops used by each worker should be taken into account. Visual 
+Studio Code is free, as well as Bitbucket, since we have fewer than five employees: 
+● Office: Since it is a coworking space, all expenses such as internet, electricity, 
+water, and office supplies are included in the monthly rent. The reference 
+location used is Cloudworks [9]. 
+● Laptop: Since there are four employees, a laptop that meets the necessary 
+specifications for their tasks is purchased for each of them. The reference 
+model used is the HP 15-fd0096ns [10]. 
+ 
+Resource Cost/mounth Units Total 
+Rent Office 300.00 4 4,800.00 
+ 
+Shows monthly cost and total in four months 
+Table 4: Resource 
+ 
+To calculate the amortisation of each laptop, it is necessary to know the cost, useful 
+life, working days in Catalonia [11] (excluding 22 vacation days), daily workload, and 
+project duration. 
+Resource Cost Units 
+Useful life 
+(years) 
+working 
+days 
+per year 
+hour/day Total Hour Total 
+Labtop HP 699.00 4 4 228 6 441 225.34 
+Shows total amortisation for all four laptops 
+Table 5: Amortisation 
+25 
+
+3.1.3. Contingency 
+ 
+All projects should include a margin of error in their budgets, as unforeseen events 
+often lead to additional expenses. Typically, this margin is calculated between 10% and 
+20% of the total budget.   
+In this case, a 10% margin is chosen as it represents the minimum value, ensuring the 
+lowest possible budget for the client. 
+Human Resource Percentage Contingency 
+14,494.85 5,025.34 10 1,952.02 
+Shows total contingency cost 
+Table 6: Contingency 
+3.1.4. Incidentals 
+In addition to having a margin for unforeseen events, it is also important to assess how 
+much the budget would increase if any of the risks outlined in section 4 of this 
+document were to occur.   
+To account for these risks in the budget, a percentage is assigned based on the 
+likelihood of each scenario happening, which is then multiplied by the estimated cost of 
+that specific case. 
+Incident Risk(%) Hour Cost/hour 
+Total(€) 
+R1 66 7 25 114.114 
+R2 11 21 25 57.057 
+R3 33 14 25 114.114 
+Total  285.285 
+Shows partial and total incident cost 
+Table 7: Incident 
+3.1.5. Final budget 
+Finally, to calculate the total value of the budget, you simply have to add the total of the 
+points mentioned above: 
+Human Resource Contingency Incidentals Total 
+14,494.85 5,025.34 1,952.02 285.29 21,757.49 
+Shows total budget 
+Table 8: Budget 
+26 
+
+4. Specification of requirements 
+4.1. Requirements collection process 
+To define the scope and functionalities the application had to include, a process of 
+requirements definition was carried out in collaboration with SetHome. Although the 
+overall goal of the project was clear from the beginning, to manage and analyze 
+property information using both internal and cadastral data, the specific functionalities 
+were refined through several meetings with the company's representatives. 
+These meetings were held exclusively with the Product Owner, who acted as the main 
+point of contact. All communication took place remotely via video calls, which allowed 
+for agile and efficient decision-making despite not being on-site. 
+The functional requirements came from the operational needs SetHome found in their 
+daily work, like detecting duplicates, tracking sales, or validating data with the cadastre. 
+An example was defining how to compare properties in the system with those in the 
+cadastre. At first, attributes like title, location, year built, and area were considered. But 
+at the client’s request, a new rule was set: the location must match, and at least two of 
+these must also match: year built, area, or parcel number. This helped adjust the 
+system to the client’s real validation needs. 
+Regarding the non-functional requirements, they were established considering the 
+company’s operating hours and the need for data to be available during the working 
+day (from 9 a.m. to 8 p.m.). For this reason, it was decided to schedule the automatic 
+data update process at 10 p.m., making sure that the data is loaded and ready by the 
+next morning. 
+4.2. Functional requirements 
+A functional requirement [12] is a statement of what a product (system, subsystem, 
+device, or software program) must do. Next, the functional requirements for the product 
+that this project develops are presented. 
+ 
+● FR1 - The downloading process of information that the external services 
+provide must be executed automatically at configurable intervals set by the 
+system administrator. 
+27 
+
+● FR2 - The application must allow comparing properties with cadastral data, 
+requiring a mandatory match on the locality and, in addition, a match on at least 
+two of the following attributes: construction year, surface area, or parcel 
+number. 
+● FR3 - When cadastral data is updated, the system must automatically compare 
+the new information with the existing records and update them accordingly. 
+● FR4 - The interface must allow the user to define an error margin for data 
+comparison between loading and cadastral records. 
+● FR5 - The interface must include a section where the user can view and correct 
+detected data errors. 
+● FR6 - The user must be able to validate and manually approve changes before 
+updating the database. 
+● FR7 - The system must allow the reversal of changes in case a manual 
+correction introduces errors. 
+● FR8 - The interface must display a table with key property data, including 
+reference, name, property type, location, price, surface area, address, 
+advertiser, and creation date. 
+● FR9 - The interface with property data in a table must enable the display of 
+associated images within the table. 
+● FR10 - The interface must include action buttons (for example: editing, 
+deleting). 
+● FR11 - The interface must include an advanced filtering system, allowing users 
+to search for properties by reference, title, price, surface area, property type, 
+year of construction, status, location, advertiser type, and assigned user. 
+● FR12 - Filters must be applicable in combination and should include sorting 
+options (ascending/descending) for different attributes. 
+● FR13 - The system must allow selecting all properties that match the applied 
+filters. 
+ 
+4.3. Non functional requirements  
+A non-functional requirement [12] is a statement of what a product is or how it will be 
+constructed, or a constraint on how the product will be designed or will behave. Next, 
+the non functional requirements for the product that this project develops are 
+presented. 
+ 
+28 
+
+Interaction Capability 
+● NFR1 - The user must be able to access the information with the fewest clicks 
+● NFR2 - Data must be accessible during business hours (9am - 8pm)  
+Performance Efficiency 
+● NFR3 - It must be possible to launch the downloading process every 24 hours 
+Maintainability 
+● NFR4 - It must be able to adapt to changes in the distribution of information 
+returned 
+4.4. Conceptual Data Model 
+In a conceptual data model each class represents a set of objects that share common 
+attributes and about which it is necessary to store information. The model also includes 
+associations existent among objects and the possible multiplicity of these associations.  
+ 
+Figure 5 presents the class diagram in language UML with classes, attributes and 
+associations of the system developed in this project. In the diagram it is possible to 
+distinguish the classes added for the system developed and classes already existing 
+before this project due to other software applications of SetHome. Specifically, the 
+classes shown in blue correspond to those that were already part of the system. The 
+attributes included in the diagram are strictly those necessary to meet the established 
+requirements, and each attribute is associated with its corresponding data type. 
+ 
+The diagram focuses on a main class called Property, which forms the core of the 
+system and contains all relevant information about a property. Additionally, there are 
+other important classes, such as: 
+ 
+● Pipeline: defines the possible states or stages a property can have within the 
+process. 
+● PossibleDuplicados: records possible duplicate properties to facilitate their 
+management. 
+● Credentials: stores the credentials needed to access the external service 
+provided by SetHome. 
+● SimilarityMatrix: stores similarity relationships between properties, showing 
+how closely related they are to each other. 
+29 
+
+● Configuracion: contains the values and error margins used to calculate the 
+similarity matrix or to determine if a cadastral property matches one from the 
+Property class. 
+● PossibleCadastralProperty: records the relationship between a cadastral 
+property and one in the system, identifying possible matches to facilitate 
+validation and linking of data between both sources. 
+● Price: maintains the price history associated with each property to perform 
+tracking and trend analysis. 
+● Address and ValidAddress: contain lists of addresses related to possible 
+cadastral properties. For each PossibleCadastralProperty there is an Address, 
+while ValidAddress are those addresses the administrator has verified and 
+confirmed as correct. 
+ 
+Although the UML diagram provides a clear overall view of the system's structure and 
+the relationships between its entities, it can’t graphically represent all the specific 
+constraints and conditions that must satisfy the data of the domain. Therefore, the 
+following textual constraints are included, as they could not be expressed graphically: 
+Textual Constraints 
+● Each Address must be associated with a unique PossibleCadastralProperty. 
+● The price must be a positive value greater than zero. 
+● The area must be a positive value. 
+● The construction year must not be greater than the current year. 
+● For each Address, there must be a corresponding value in 
+PossibleCadastralProperty. 
+● ValidAddress must be linked to the same property as the Address. 
+● The Pipeline class must define a finite and ordered set of states. 
+● A property can only be in one active state of the Pipeline at a given time. 
+● The error margins defined in Configuration must be greater than 0. 
+● The error margins defined in Configuration must be less than 100. 
+ 
+30 
+
+ 
+Figure 5: Conceptual Data Model. Source: Own elaboration. 
+31 
+
+4.5. User Stories Description  
+The following section presents the user stories that describe the functional 
+requirements of the system. These stories are organized in a table format, where each 
+one includes its identifier code, title, a brief description, and the acceptance criteria that 
+define its correct implementation. 
+ 
+ 
+VPL View properties list 
+As a user, I want to be able to see all the downloading properties so that I can check 
+the relevant information for each one. 
+● A list of all properties is displayed. 
+● The relevant information for each property is shown (Duplicates, Assigned 
+User, Reference, Name, Gallery, Property Type, Town, Price, Surface Area, 
+Addresses, Advertiser, Created Date). 
+ 
+ASFP Add search/filter properties 
+As a user, I want to be able to search and filter properties so that I can find the ones 
+I'm interested in. 
+● The available filters are displayed. 
+● The properties are filtered based on the applied filters. 
+ 
+ 
+MIAP More information about a property 
+As a user, I want to be able to see more information about a property so that I can 
+open a window with more information 
+● An option is displayed for each property to view more information. 
+● A window with more information about the selected property is shown. 
+ 
+OAP Original advertisement of the property 
+As a user, I want to be able to see original advertisement of a property so that I can 
+32 
+SP Select a property 
+As a user, I want to be able to select a few properties so that I can work with that 
+properties group 
+● The option to select a property is displayed. 
+● The selected properties are assigned to the desired user. 
+
+verify the information 
+● An option is displayed for each property to view the original ad. 
+● A window with Original advertisement of the property is shown 
+ 
+ 
+ 
+ 
+ 
+DESPL Download an excel with selected properties list 
+As a user, I want to be able to download an Excel with all the properties or a curated 
+list so that I can see an Excel with all the attributes of each property 
+33 
+ANP Add new property 
+As a user, I want to be able to create a new property so that I can give value to all of 
+its attributes 
+● The option to create a new property is displayed. 
+● A form with all the property attributes is opened. 
+● The property is created successfully. 
+EP Edit property 
+As a user, I want to be able to edit a property so that I can see all attributes about 
+that and modify them. 
+● All property attributes are displayed. 
+● All property attributes can be edited. 
+● The changes are saved correctly. 
+DP Delete property 
+As a user, I want to be able to edit a property so that I can eliminate all information 
+about that 
+● All information about the property is deleted. 
+● Any relationships the property has are removed. 
+● The images of the property are deleted. 
+DEP Disable/enable a property 
+As an administrator, I want to be able to disable or enable a property so that user 
+can’t see the property 
+● Disabled properties are shown in red. 
+● Disabled properties are displayed only if the filter is applied. 
+
+● The option to download the Excel file is displayed. 
+● An Excel file is downloaded with all the attributes of each selected property. If 
+none are selected, all properties are included. 
+ 
+CPDD Create a pipeline drag and drop 
+As an administrator, I want to be able to change property state with a drag and drop 
+so that I can see easily the property state 
+● A screen is displayed with the list of properties in card format. 
+● Cards can be moved from one status to another by dragging and dropping. 
+● The property status is updated correctly. 
+ 
+EPP Edit a pipeline 
+As an administrator, I want to be able to change the name, order and color of a 
+pipeline so that I can change that at any time 
+● A screen is shown with the pipelines list sorted, each one with the value of 
+their attributes. 
+● Changes are correctly stored 
+ 
+ECAMP Edit configuration about matching process 
+As an administrator, I want to be able to change the configuration of the matching 
+process so that I can adjust its precision. 
+● All the attributes used for matching and their current weights are displayed. 
+● Changes are saved correctly. 
+ 
+ANWPAU Assign notification when a property is assigned to a user 
+As a user, I want to receive a notification when a property is assigned to me so that I 
+am aware of the new assignment. 
+● A notification is triggered when a property is assigned. 
+● The user receives the notification in the system. 
+● The notification is marked as unread until the user sees it. 
+ 
+34 
+
+5. System architecture 
+This chapter provides a schematic overview of the system’s architecture, starting with 
+the physical architecture followed by the logical one. It will also include examples of 
+sequence diagrams, discuss the design patterns used, and conclude with the database 
+design. 
+5.1. Physical architecture   
+The physical architecture (see Figure 6) of the SetHome system is deployed on a 
+Virtual Private Server (VPS) [13], which is a virtualized server that mimics a dedicated 
+server within a shared hosting environment and server provided by OVHcloud[14], and 
+used through a browser from any physical device such as mobile, tablet or computer.  
+ 
+The server has all the necessary services installed and configured to run the system: 
+Nginx, PM2, and MongoDB, in addition to the Backoffice and Backend code. 
+ 
+● Nginx[15] acts as a reverse proxy, receiving requests from the Internet and 
+internally redirecting them to the appropriate services based on the access 
+URL. 
+ 
+● The Backoffice is a web application developed with React.js. As a Single Page 
+Application[16] (SPA), it is served as static content by Nginx. 
+ 
+● The Backend is a RESTful API developed in Node.js, responsible for 
+processing the system logic and exposing the different endpoints. Its execution 
+is managed by PM2, which ensures the continuous availability of the application 
+and allows for monitoring and automatic restart in case of failures. 
+ 
+● MongoDB[17] is the NoSQL database used, responsible for persistently storing 
+all the data handled by the system. 
+ 
+Nginx is responsible for correctly routing the requests that come from different 
+Internet-connected devices (computers, mobile phones, tablets), to the corresponding 
+service within the VPS. 
+ 
+35 
+
+ 
+Figure 6: Physical architecture. Source: Own elaboration. 
+5.2. Logical architecture  
+Logical architecture refers to how the different components and modules of the 
+software are organized and interact to carry out the application's functions and 
+operations. This architecture focuses on the system's structure and conceptual design, 
+without taking into account implementation details or concerns related to hardware or 
+infrastructure. 
+ 
+Figure 7: Logical architecture. Source: Own elaboration. 
+ 
+Next, there is a subsection per each package in the logical architecture of Figure 6.  
+36 
+
+5.2.1. VPS web server logical architecture 
+This section describes the logical architecture of the backend in the VPS web server. 
+As shown in Figure 7, a modular pattern based on the MVC [18] 
+(Model-View-Controller) model has been adopted, with a detailed description provided 
+in Section 5.4. This architecture enables a clear separation of concerns: routes define 
+the entry points (view), controllers handle the business logic, and models manage 
+access to the MongoDB database. 
+The structure is organized into Routers, Middlewares, Controllers, and Models: 
+● Routers: Their role is to organize and manage the routes of the REST API. 
+Each router represents a group of endpoints related to a specific object in the 
+system. In this project, there are only five objects that require their own router: 
+○ Property 
+○ Pipeline 
+○ Comment 
+○ Notification 
+○ Configuration 
+● Middlewares: These are functions that run between receiving an HTTP request 
+and the final execution of the endpoint logic. In this project, a security 
+mechanism has been implemented using middlewares placed between the 
+router and the controller. Specifically, a function called verifyTokens is used to 
+check the validity of the JWT token included in the request. This middleware 
+acts as an authentication filter: if the request does not include a valid token, an 
+HTTP 403 (Forbidden) error is returned, preventing unauthorized access. This 
+approach promotes system modularity and follows the DRY [19] (Don't Repeat 
+Yourself) principle, as it allows the middleware to be reused across multiple 
+routes without duplicating code. 
+● Controllers: They contain the main logic for each operation associated with a 
+route. Therefore, there is one controller for each router, acting as an 
+intermediary between the HTTP request and the data access layer. 
+● Models: They define the structure of the data stored in the MongoDB database. 
+Each model represents a MongoDB collection with its corresponding fields, 
+validations, and types. 
+The general flow of request processing (illustrated in Figure 8) is as follows: 
+1. The router receives the HTTP request and directs it to the appropriate route. 
+37 
+
+2. Before reaching the controller, middlewares such as verifyTokens are executed 
+to perform preliminary validations. 
+3. If the verification is successful, the controller processes the logic for the 
+requested operation. 
+4. Finally, the model accesses the database to read or modify data, and the 
+corresponding response is sent back to the client. 
+This design enhances maintainability, scalability, and code reusability throughout the 
+entire application. 
+ 
+Figure 8: API Design with MVC Pattern. Source: Own elaboration. 
+5.2.2. Client web logical architecture 
+This section describes the logical architecture of the Client web. As shown in Figure 9, 
+the component in the client is the backoffice, and here its structure is presented. The 
+source code of backoffice has been organized within the src folder, following a modular 
+and scalable architecture, where each folder represents a functional package of the 
+application. 
+● api: This folder contains the general configuration for communication with the 
+backend. Additionally, this folder is structured into subfolders, one for each 
+domain data model, which allows for a modular organization of the functions 
+responsible for interacting with the different server endpoints. 
+● app: This folder represents the functional core of the backoffice. Inside, various 
+folders are organized in a modular way: 
+○ components: contains reusable UI components such as forms, buttons, 
+tables, and other generic visual elements used throughout the system. 
+○ hooks: stores custom functions that encapsulate reusable logic, such as 
+authentication handling or managing shared state between components. 
+38 
+
+○ modules: structures business logic and views by functionality. It contains 
+subfolders such as: 
+■ Auth, dedicated to managing the authentication process, 
+including actions like logging in, registering, or logging out. 
+■ Errors, which handles the views associated with system errors, 
+such as 404 error pages. 
+■ ContentManager, the core of the backoffice. This folder includes 
+a subfolder for each domain entity managed through the admin 
+panel. For example, the property entity has its own folder, where 
+the necessary views are defined to display, edit, and manage 
+those properties. This pattern is repeated for each relevant entity, 
+facilitating scalability and logical organization of the content. 
+○ pages: includes the main pages of the backoffice. For instance, it 
+defines the general structure of the dashboard, which serves as a visual 
+container for the other modules. 
+● metronic[20]: This folder contains components and the base design for the 
+cooperative dashboard. 
+● constants: This folder contains global variables and constant values used 
+repeatedly throughout the application, such as texts, keys, or predefined 
+configurations. 
+● utils: This folder contains generic helper functions that support the application 
+logic and can be reused across various modules or components. 
+Figure 9 presents the  class diagram showing the main folders of the backoffice and the 
+most relevant components they contain. 
+ 
+Figure 9: Backoffice Design. Source: Own elaboration. 
+39 
+
+A functional module-based architecture has been chosen, as this structure offers 
+multiple advantages: 
+● Scalability: Each entity (such as Property, User, etc.) is encapsulated in its own 
+module under ContentManager, making it easier to add new features without 
+breaking other parts of the system. 
+● Code reusability: Folders such as components, hooks, utils, and api contain 
+reusable elements that can be used throughout the entire system. 
+● Separation of concerns: Folders are organized by purpose (UI, business logic, 
+API connection, authentication, etc.), which improves maintainability and 
+readability. 
+ 
+5.3. Examples of sequence diagrams  
+This section presents an example of a sequence diagram (see Figure 10 and Figure 
+11) that illustrates how the different classes of the backoffice and the API communicate 
+when an administrator user successfully creates a new pipeline object, without any 
+validation or credential errors occurring. 
+Figure 10: Backoffice sequence diagram. Source: Own elaboration. 
+ 
+The API object represents the backend system. It is explained in detail in the following 
+diagram. 
+40 
+
+Figure 11: Backend sequence diagram. Source: Own elaboration. 
+ 
+ 
+5.4. Used patterns 
+This section describes the patterns used in structuring the code of this project: 
+Model-View-Controler pattern, Feature-Based architecture, Smart/Dumb Component. 
+5.4.1. MVC (Model - View - Controller) 
+This pattern is used in web applications due to its ability to clearly and efficiently 
+separate responsibilities.  
+ 
+In this project, the MVC (Model-View-Controller) architectural pattern is applied to 
+structure the backend logic within the VPS web server. This pattern ensures a clean 
+separation of responsibilities, and in the context of this REST API, it is implemented as 
+follows: 
+● Model: This layer is implemented through the files in the models folder of the 
+project. Each model corresponds to a MongoDB collection (such as Property, 
+Pipeline, Comment, etc.) and defines the data schema, types, and validation 
+rules. These models are responsible for directly interacting with the MongoDB 
+database to perform operations like creation, retrieval, update, and deletion of 
+data. 
+● View: In this REST API, the view is not a graphical interface but is represented 
+by the routes defined in the routers folder. These routes receive client requests, 
+41 
+
+apply middleware if necessary, and redirect the request to the appropriate 
+controller. They are responsible for defining which endpoints are available for 
+each entity and with which HTTP methods (GET, POST, PUT, DELETE). 
+● Controller: The logic for the controller layer is located in the controllers folder. 
+Each controller is associated with a specific entity and is responsible for 
+handling the business logic of each operation. Controllers receive the data from 
+the routers, process it, and use the corresponding model to access or modify 
+the database. At the end of the process, the controller generates an appropriate 
+response (in JSON format) to be sent to the client. 
+ 
+5.4.2. Feature-Based Architecture 
+This pattern organizes code based on specific system functionalities rather than 
+grouping it by file type (components, pages, services, etc.). 
+ 
+In this project, the structure is organized around functional modules. For instance,  
+within the app/modules/ folder, Auth/ groups code for the authentication of users, 
+including login, registration, and token management functionalities and 
+ContentManager/Property/ groups code related to property management. Each module 
+contains its own pages, logic, and related components, which facilitates maintainability, 
+scalability, and separation of concerns. 
+ 
+Additionally, reusable components and common utilities are placed in separate folders 
+such as components/, hooks/, or utils/, in accordance with reuse and decoupling 
+principles. This modular architecture supports collaborative development and allows 
+new features to be added in an organized and efficient manner. 
+ 
+5.4.3. Smart/Dumb Component 
+The Smart Component / Dumb Component[21] design pattern is used to improve 
+scalability, code readability, and component reusability. 
+ 
+In this project this pattern has been followed in the backoffice of the Client web to 
+maintain a clear separation between business logic and visual interface logic.  
+One example of Smart Components is the EditEstadoPipeline component (see Figure 
+12) . These types of components are responsible for: 
+● Managing local state with useState. 
+42 
+
+JavaScript
+● Making API calls. 
+● Handling side effects with useEffect. 
+● Performing validations. 
+● Managing navigation and events. 
+● Passing data to child (Dumb) components. 
+As can be seen in the Javascript code of the figure, the component manages data 
+loading from the backend. Additionally, EditEstadoPipeline handles the save and delete 
+logic, navigation, validations, and controls a confirmation dialog. 
+ 
+useEffect(() => { 
+  if (!estadoPipelineId) { 
+    disableLoadingData(); 
+    return; 
+  } 
+  getEstadoPipelineById(estadoPipelineId) 
+    .then((res) => { 
+      if (res.status === 200) { 
+        setEstadoPipeline(res.data); 
+        disableLoadingData(); 
+      } 
+    }) 
+    .catch((error) => { 
+      alertError({ 
+        error: error, 
+        customMessage: "No se ha podido obtener la estadoPipeline.", 
+      }); 
+      history.push("/estados-pipeline"); 
+    }); 
+}, [estadoPipelineId, disableLoadingData, history]); 
+Figure 12: Smart component example. Source: Own elaboration. 
+ 
+One example of Dumb Component is the ConfirmDialog component (see Figure 13) Its 
+functionalities are: 
+● Its function is purely visual. 
+● It receives all information from the parent component via props (title, open, 
+setOpen, onConfirm). 
+● It contains no business logic. 
+● Its sole purpose is to display a reusable interface for confirming actions. 
+This component has no knowledge of the context in which it is used, nor does it 
+perform any specific business actions. It only knows that it must execute onConfirm() 
+when the user accepts, and close itself when the user cancels. 
+43 
+
+JavaScript
+ 
+const ConfirmDialog = (props) => { 
+  const { title, children, open, setOpen, onConfirm } = props; 
+  return ( 
+    <Dialog open={open} onClose={() => setOpen(false)}> 
+      <DialogTitle>{title}</DialogTitle> 
+      <DialogContent>{children}</DialogContent> 
+      <DialogActions> 
+        <Button 
+          variant="outlined" 
+          color="primary" 
+          onClick={() => { 
+            setOpen(false); 
+            onConfirm(); 
+          }} 
+        > 
+          Yes 
+        </Button> 
+        <Button 
+          variant="outlined" 
+          color="secondary" 
+          onClick={() => setOpen(false)} 
+        > 
+          No 
+        </Button> 
+      </DialogActions> 
+    </Dialog> 
+  ); 
+}; 
+Figure 13: Dumb component example. Source: Own elaboration. 
+ 
+5.5. Database: Logical Design 
+This project extends an existing database, with new specific collections that support the 
+developed functionalities. The database management system used is MongoDB. It is a 
+document-based NoSQL database that allows for modeling complex, embedded, and 
+flexible data structures without the need for rigid schemas or strict relationships like 
+those in a relational database. 
+ 
+The collections added to the existing company database are the following: 
+ 
+ 
+44 
+
+● property 
+This collection stores information about properties and serves as the core of the 
+system. Each document includes: 
+○ title(String) 
+○ description(String) 
+○ type(String) 
+○ phone(String) 
+○ area(Integer) 
+○ price(Array of Objects) 
+■ value(Integer) 
+■ date(Date) 
+○ añoConstruccion (Integer) 
+○ certificadoEnergetico (String) 
+○ gallery(Array of String) 
+○ nplanta (Integer) 
+○ nbaños (Integer) 
+○ nhabitaciones (Integer) 
+○ origin(String) (URL of the information source) 
+○ anunciante(String) 
+○ moreInfo(String) 
+○ seen(Boolean) 
+○ active(Boolean) 
+○ createdAt(Date) 
+○ updatedAt(Date) 
+○ addresses(Arrays of Strings) 
+○ validAddresses (Arrays of Strings) 
+○ localidad(ObjectId) reference to Localidad collection. 
+○ assignedUser(ObjectId) reference to User collection. 
+○ status(ObjectId)  reference to Pipeline collection. 
+○ evolution(Array of objects) 
+■ date(Date) 
+■ status(ObjectId)  reference to Pipeline collection. 
+○ potentialDuplicates(Array of ObjectId) reference to Property collection. 
+○ possibleCadastralReferences(Array of ObjectId)  reference to 
+CadastralProperty collection. 
+○ comentarios(Array of objects) 
+■ message(String) 
+45 
+
+■ user(ObjectId)  reference to User collection 
+■ createdAt(Date). 
+● configurations 
+This collection stores the weight values assigned to each property attribute in 
+order to determine whether a property is a duplicate. It also contains the error 
+margins used for matching properties with the official cadastral database. Each 
+document includes: 
+○ weights(Object): 
+An object containing the weights for each attribute used in duplicate 
+detection calculations: 
+■ title(Double) 
+■ description(Double) 
+■ moreInfo(Double) 
+■ address(Double) 
+■ price(Double) 
+■ area(Double) 
+■ nhabitaciones(Double)  
+■ nbaños(Double) 
+■ nplanta(Double) 
+■ añoConstruccion(Double) 
+○ errorFactors(Object): 
+An object containing the error margin (in percentage) for each attribute 
+used in cadastral property matching: 
+■ areaError(Integer) 
+■ parcelaError(Integer) 
+■ areaErrorIfExact(Integer) 
+■ añoConstruccionError(Integer) 
+■ priceError(Integer) 
+● similarityMatrix 
+Stores similarity matrices between properties to detect potential duplicates. 
+Each document includes: 
+○ date(Date)(The date the matrix was generated) 
+○ matrix(Array of Objects) 
+■ propertyId(ObjectId)(the base property) 
+■ similarities(Array of objects)(representing similar properties) 
+➢ propertyId(ObjectId)(the comparable property) 
+➢ score(Double)(the similarity score)  
+46 
+
+● pipeline 
+Represents the flow of statuses that a property goes through in the commercial 
+process. Each document includes: 
+○ name(String) 
+○ color(String) 
+○ order(Integer) 
+○ items(Array of ObjectId) 
+○ createdAt(Date) 
+○ updatedAt(Date) 
+ 
+● credentials 
+Auxiliary collection that stores authentication tokens used to integrate the 
+system with the external tool. Each document contains: 
+○ access_token(String) 
+○ refresh_token(String) 
+○ token_type(String) 
+○ expires_in(Integer) 
+○ createdAt(Date) 
+○ updatedAt(Date) 
+ 
+● notification 
+Keeps a record of all notifications delivered to users. Each document contains: 
+○ seen(Boolean) 
+○ active(Boolean) 
+○ message(String) 
+○ destinationUser(ObjectId) 
+○ propertyId(ObjectId) 
+○ createdAt(Date) 
+○ updatedAt(Date) 
+ 
+5.6. Database: Physical Design 
+At the physical level, a series of decisions have been made to maximize performance, 
+ensure proper scalability, and facilitate system maintenance. These decisions are 
+summarized in the following points: 
+ 
+47 
+
+JavaScript
+● Traceability 
+All documents include audit fields createdAt and updatedAt to preserve the 
+history and evolution of the data. 
+ 
+● Data Types 
+○ Dates 
+MongoDB's native Date type (represented as { "$date": "..." }) is used to 
+allow sorting, filtering, or calculating time ranges. 
+○ Identifiers 
+All document IDs (_id) and references (propertyId, localidad, 
+assignedUser, etc.) use MongoDB’s standard ObjectId type. 
+○ Numeric values 
+■ area, nbaños, nhabitaciones, nplanta, and price.value use 
+integer, as decimal values are not meaningful for these fields. 
+For example: 
+➢ area does not include decimals in the provided data. 
+➢ price values are typically large, and decimals are not 
+used. 
+➢ The number of bathrooms, rooms, and floors are always 
+whole numbers. 
+■ score in similarityMatrix allows a Double to represent the 
+similarity between properties with decimal precision. 
+○ Text strings  
+Descriptive fields like title, description, origin, anunciante, moreInfo, 
+among others, use the string type to be able to have greater flexibility. 
+ 
+● Defined Indexes 
+To improve performance for the most common queries, the following indexes 
+have been created: 
+○ In the property collection: 
+propertySchema.index({ createdAt: -1 }); 
+propertySchema.index({ localidad: 1, area: 1, añoConstruccion: 1 }); 
+The first one allows for quick sorting of properties by creation date 
+(useful for displaying recent listings). 
+48 
+
+JavaScript
+The second one facilitates searches based on geographic and physical 
+criteria, such as “properties in a specific locality with a certain size and 
+construction year.” 
+○ In the similarityMatrix collection: 
+similarityMatrixSchema.index({ date: -1 }); 
+similarityMatrixSchema.index({ "matrix.propertyId": 1 }); 
+The index on date optimizes the retrieval of the most recently generated 
+matrix. 
+The index on matrix.propertyId enables fast access to the similarities 
+associated with a specific property. 
+ 
+5.7. Interface Design 
+This section explains the organization of the new views added to the backoffice.  
+The base structure of the backoffice interface is a main dashboard that features a side 
+menu with different navigation options. Four new sections have been added to the 
+dashboard: Properties, Pipeline, Pipeline States, and Configuration. Next there is a 
+description of design layouts for each section, the screens they include, and how users 
+can navigate between them. 
+5.7.1. Properties 
+This part of the backoffice interface is designed to facilitate property management for 
+the user (see Figure 14). It consists of three screens, with the main one being 
+PropertiesPage, which displays a filter and a table containing relevant information 
+about each property. From this screen, users can activate/deactivate or delete a 
+property, access the original data source, and add or edit properties. To add or edit a 
+property, users are redirected to the EditProperty screen. 
+Additionally, there is a side panel that opens with a summarized view of the property, 
+allowing users to assign it to an agent, edit fields such as title, description, price, and 
+area, or add comments. 
+49 
+
+Figure 14: Properties Interface design. Source: Own elaboration. 
+5.7.2. Pipeline 
+This part of the backoffice interface facilitates to the user the management of the status 
+of properties  (see Figure 15). It displays a screen with a drag-and-drop interface, 
+where each column represents a status previously defined by the administrator. 
+Properties can be freely moved from one status to another. Additionally, it includes the 
+same filtering system as the PropertiesPage screen, allowing users to view only the 
+properties they are interested in. 
+50 
+
+Figure 15: Pipeline Interface design. Source: Own elaboration. 
+5.7.3. Pipeline Status 
+This part of the backoffice interface facilitates to the user the management of  the 
+different statuses that make up the pipeline  (see Figure 16). It includes a filter and a 
+table displaying the existing statuses, ordered from the first to the last. From this view, 
+users can delete a status, change its order, or navigate to the edit screen to add a new 
+one or update an existing status. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figure 16: Status Properties Interface design. Source: Own elaboration. 
+51 
+
+ 
+5.7.4. Configuration 
+This part of the backoffice interface facilitates to the user the edition of the different 
+values used in the duplicate detection process and in the cadastral property search  
+(see Figure 17). It consists of a screen with a form where users can adjust the weights 
+and error margins for each attribute. 
+Figure 17: Configuration Interface design. Source: Own elaboration. 
+ 
+52 
+
+6. Implementation 
+6.1. Technologies and languages   used 
+This project, composed of a backoffice and a backend, has been designed with a focus 
+on adaptability and scalability over other aspects. For this reason, the following 
+technologies were selected, as they support these objectives. 
+6.1.1. Backend developed with Node.js and Express.js 
+The backend is developed using Node.js and Express.js, technologies that enable the 
+creation of a lightweight, efficient, and easily scalable architecture. This choice 
+responds to the need for a system that can adapt to potential changes in context and 
+grow according to SetHome's demands. Additionally, the backend is deployed on an 
+OVHcloud VPS server, ensuring a flexible, controlled environment with dedicated 
+resources, thus contributing to a robust infrastructure prepared for growth. 
+6.1.2. NoSQL database using MongoDB 
+For data management, a NoSQL database using MongoDB was chosen, as its flexible 
+document-based structure allows greater adaptability to changes in the data model, 
+something especially useful during the early stages of the project's development and 
+evolution. Additionally, MongoDB facilitates handling large volumes of data and offers 
+high performance in read and write operations, which directly contributes to the 
+system's scalability. This choice also enables a more natural integration with Node.js, 
+optimizing both the development and maintenance of the backend. 
+6.1.3. Frontend built with React.js 
+React.js was chosen for the development of the backoffice due to its ability to build 
+dynamic, efficient, and easily maintainable user interfaces. React enables effective 
+state management and code modularization through reusable components, which 
+improves scalability as the project grows. In addition, its wide range of libraries and 
+tools accelerates development. This choice contributes to a modern and adaptable 
+interface, aligning with the goals of flexibility and continuous system evolution. 
+6.1.4. Additional frontend technologies 
+In addition to React.js, HTML and CSS were used in the development of the backoffice 
+to structure and style the user interface. HTML made it possible to define the hierarchy 
+53 
+
+and organization of the content, while CSS was used to apply visual styles, ensuring a 
+clear and consistent presentation. These fundamental languages have played a key 
+role in complementing React’s logic and delivering an attractive and functional user 
+experience. 
+6.2. Development tools 
+Throughout the development of the project, various tools were used to provide 
+solutions during different phases of the process, ranging from programming to 
+production environment management. Below is a description of the main uses of each 
+of them. 
+6.2.1. Visual Studio Code  
+Visual Studio Code was the main development environment used throughout the 
+project. Its broad compatibility with JavaScript, along with seamless integration with 
+technologies such as Node.js, MongoDB, and React, made it the ideal choice for both 
+backend and backoffice development. In addition, the wide range of available 
+extensions, such as ESLint for code quality, Prettier for formatting, and Git integration, 
+helped maintain clean and consistent code throughout the entire project. 
+6.2.2. Postman 
+Postman was used as the main tool for testing and debugging the different endpoints 
+involved in the system. Thanks to its intuitive interface, it facilitated the verification of 
+correct functionality, response validation, and error analysis. 
+6.2.3. Windows PowerShell 
+PowerShell was used as the primary terminal for interacting with the production server. 
+Through this tool, remote connections via SSH were managed, allowing access to 
+perform deployment, monitoring, and system maintenance tasks. Additionally, 
+PowerShell was used to launch local servers during development. Its integration with 
+the Windows environment enabled efficient management. 
+6.2.4. Google Chrome 
+Google Chrome has been the primary tool for browsing and testing the system 
+throughout the entire project development. Thanks to its powerful built-in developer 
+tools (DevTools), it has allowed inspecting and debugging frontend code, analyzing 
+54 
+
+performance, reviewing the error console, and monitoring network requests. 
+Additionally, Chrome has facilitated checking the user interface across different 
+resolutions and devices, ensuring an optimal and consistent experience for the end 
+user. 
+6.3. Relevant aspects of the code implementation 
+6.3.1. Implementation of API Endpoints 
+One of the most important aspects of this project is the communication between the 
+backoffice and the backend thanks to the REST API implemented in the backend that 
+is accessible through endpoints. Next (Tables 9 to 12), the list of REST API endpoints 
+is included. For each endpoint, it is detailed its purpose, URL, and HTTP method to use 
+it.  
+Properties endpoints 
+GET /api/property/count 
+Count all properties 
+POST /api/property 
+Add property 
+PUT /api/property/change-status/{id} 
+Change status of property's active attribute by id 
+PUT /api/property/{id} 
+Update property 
+GET /api/property/{id} 
+Get property by id 
+POST /api/property/byIds 
+Get properties by a ids list 
+GET /api/property 
+Get all properties with query. 
+Options: page, limit and refId 
+GET /api/property/user/:userId 
+Get all properties by userId with query. 
+Options: page and limit 
+DELETE /api/property/{id} 
+Delete property by id 
+POST /api/property/addresses 
+Update Addresses from individual property 
+Table 9: Properties endpoints 
+ 
+ 
+55 
+
+ 
+Pipelines Endpoints 
+POST /api/pipeline 
+Add pipeline 
+POST /api/pipeline/swap-orders 
+Swap orders 
+PUT /api/pipeline/{id} 
+Update pipeline 
+GET /api/pipeline/{id} 
+Get pipeline by id 
+GET /api/pipeline 
+Get all pipelines 
+DELETE /api/pipeline/{id} 
+Delete pipeline by id 
+Table 10: Pipelines endpoints 
+ 
+Notifications Endpoints 
+GET /api/notification/user/:id 
+Get notification by User id 
+POST /api/notification 
+Add notification 
+PUT /api/notification/change-status/{id} 
+Change status of notification by id 
+Table 11: Notifications endpoints 
+Configuration endpoints 
+GET api/configuration/{id} 
+Get configuration by id 
+PUT api/configuration/{id} 
+Update configuration by id 
+Table 12: Configuration endpoints 
+ 
+6.3.2. Implementation of data processing 
+In the development of this project, the main functionality, which also provides the 
+system’s core data, represents a critical component within the overall workflow. Its 
+correct operation is essential, as any failure at this stage could compromise the 
+integrity of the property information. The primary goal of this functionality is to 
+normalize the data coming from the external service provided by SetHome. 
+56 
+
+The process is structured into three distinct phases: 
+● First, the property data stored in SetHome’s service is downloaded.  
+● Next, this information is normalized, a process that includes linking it with data 
+from the cadastre. 
+● Finally, the system checks whether each property is already registered in the 
+database in order to update its values or, if not, to add it as a new entry. 
+Next, the implementation of these phases is described. 
+Since the data download is limited to a single request to the external service, the Axios 
+request and the reception of the response can be seen in Figure 18, and the updating 
+or insertion of properties can be seen in Figure 19, where the system checks whether 
+the property exists and then creates or updates it based on the result of that check, the 
+explanation will focus on the normalization stage, as it is the most complex and critical 
+component of the process. 
+ 
+Figure 18: Code used to download data. Source: Own elaboration. 
+57 
+
+ 
+Figure 19: Code used to update or create a new property. Source: Own elaboration. 
+ 
+Normalization including linking it with data from the cadastre 
+Normalization begins with identifying the most likely locality of a property, using both 
+the location field and the title. The terms present in these fields are compared against a 
+list of localities stored in the Localidades collection, selecting the one with the highest 
+match. Then, the property type is determined by analyzing the title for representative 
+58 
+
+keywords such as "apartment", "house", "penthouse", etc. (Figure 1 in the Appendix 
+shows the code used to link the Localidad with a property). 
+Once the locality and property type have been identified, the basic features are 
+extracted from the Características_básicas field, which is provided as a text string. This 
+allows the system to obtain the number of rooms, bathrooms, and the floor on which 
+the property is located, as well as the year of construction, provided it is indicated in a 
+valid format. Additionally, surface-related metrics are extracted, such as built area, 
+usable area, and plot size, by locating the values associated with specific terms like 
+“construidos”, “útiles”, or “parcela” (see Figure 20). 
+ 
+Figure 20: Code used to get values associated with specific terms. Source: Own elaboration. 
+ 
+The normalization of the property name is performed based on the title, removing 
+generic terms in order to retain only the meaningful part of the name. With the 
+extracted information, a search is conducted for similar properties in the cadastral 
+database, using locality, built area, usable area, and year of construction as 
+parameters. The goal of this procedure is to identify potentially associated cadastral 
+references and relevant addresses. (Figure 2 in the Appendix shows the code used to 
+search for cadastral properties in the database). 
+Finally, a structured object is built that integrates all the transformed information: title, 
+description, address, physical characteristics, price, and estimated cadastral 
+references. Additionally, an initial status is assigned within the commercial pipeline, 
+along with an evolution history that begins on the record’s creation date. The resulting 
+property is marked as active, unviewed, and ready to be managed within the system. 
+After that, the code is executed to update or add the normalized property (see Figure 
+19). 
+ 
+59 
+
+JSON
+ 
+Real Example 
+Below a simplified example of the phases implementation is described, based on real 
+data, that illustrates how the analysis process works within the system. First, the data 
+received from the key variables is shown. Then, the processed data derived from them 
+is presented. After that, the property is linked to the cadastre data, and finally, the 
+results are illustrated with images. 
+It focuses on three key variables: Título, Ubicación, and Características_básicas, as 
+they contain the most relevant information. It is important to note that all the variables 
+received are text strings. In this example, their values are as follows: 
+● Título: "Casa o chalet independiente en venta en Can Teixidó - Can Sors" 
+● Ubicación: "Distrito Can Teixidó - Can Sors, Alella, Maresme, Barcelona" 
+● Características_básicas: "Casa o chalet independiente 3 plantas 532 m² 
+construidos 453 m² útiles 5 habitaciones 5 baños Parcela de 1.204 m² Terraza y 
+balcón Plaza de garaje incluida en el precio Segunda mano/buen estado 
+Armarios empotrados Trastero Orientación sur, este Construido en 1997 
+Calefacción individual: Gas natural" 
+From this information, the goal is to automatically extract the following structured data: 
+● localidad 
+● nplantas 
+● nhabitaciones 
+● nbaños 
+● añoConstrucción 
+● parcela 
+● construidos 
+● utiles 
+The first step is data normalization. To achieve this, key expressions are applied 
+through an extraction function (see Figure 20). This process allows the data to be 
+identified and structured as follows: 
+"construidos": 532, 
+"utiles": 453, 
+"parcela": 1204, 
+"nhabitaciones": 5, 
+"nbaños": 5, 
+60 
+
+JSON
+JSON
+"nplanta": 3, 
+"añoConstruccion": 1997 
+Next, based on the Titulo and Ubicación, a match is searched for with the names of the 
+localities stored in the database. This process is carried out through a specific function 
+(see Figure 1 in the Appendix). In this example, the locality is successfully identified as 
+Alella. 
+With all this data already structured, the system proceeds to search for possible 
+matches with properties registered in the cadastralProperties collection. To do this, the 
+function shown in Figure 2 in the Appendix is called, which performs progressive 
+searches in the database, starting with the strictest filter. If no results are found, 
+restrictions are gradually removed. 
+In this case, having all the key fields available, a single match was found, and the final 
+result is: 
+"possibleCadastralReferences": ["1521002DF4912S0001ZJ"], 
+"addresses": [ 
+  "Distrito Can Teixidó - Can Sors, Alella, Maresme, Barcelona", 
+  "CL, LLAÜT, 3, 0, T, OD, OS, ALELLA, Barcelona, 8328" 
+], 
+"validAddresses": [] 
+ 
+At this point, the system displays both the original address and the address obtained 
+from the cadastre. The automatic process ends here, and now it is SetHome, through 
+the backoffice and the use of Google Maps, who must verify and validate the correct 
+address. After validation, the validAddresses field is updated as follows: 
+ 
+"addresses": ["Distrito Can Teixidó - Can Sors, Alella, Maresme, 
+Barcelona"
+], 
+"validAddresses": ["CL, LLAÜT, 3, 0, T, OD, OS, ALELLA, Barcelona, 
+8328"
+] 
+ 
+61 
+
+Below, it can be seen how the images from the property's listing (see Figure 21) 
+correspond to the Google Maps images (see Figures 22 and 23), which show the 
+assigned address of the property. 
+ 
+Figure 21: The property image shown by the seller. Source: Premium Houses [22]
+. 
+ 
+Figure 22: Google Maps image showing the resulting location. Source: Own elaboration. 
+ 
+Figure 23: Image showing that it is the same property. Source: Own elaboration. 
+62 
+
+6.3.3. Implementation of the duplicate detection process 
+The process of detecting duplicate properties plays a key role within the properties 
+management system, as it enables the identification of repeated entries that, despite 
+slight variations, represent the same property. This automated process optimizes 
+commercial analysis. To achieve this, several technical components interact, including: 
+custom configuration for each attribute, a similarity matrix stored alongside the score 
+history, and an execution architecture based on threads (workers) that distribute the 
+workload in parallel. (Figure 3 in the Appendix shows the code used to create a 
+WorkerPool) 
+The process begins with the retrieval of new or updated properties between the current 
+date and the last update of the similarityMatrix object, along with the configuration, 
+which includes error margins that define when a property should be considered (see 
+Figure 24) and weights that determine the relative importance of each field in the 
+similarity calculation (e.g., title, description, price, area, among others). Based on this 
+configuration, candidate properties that could be considered duplicates are filtered. 
+This filtering relies on criteria such as matching location and key numerical fields like 
+area, yearBuilt, and price, taking into account the defined error margins. This 
+significantly reduces the number of unnecessary comparisons. 
+ 
+Figure 24: Code used to filter potential properties. Source: Own elaboration. 
+For each property, a task is generated and sent to a worker. Each worker receives a 
+task containing the property to be compared, a list of potentially similar properties, and 
+the weight configuration, and returns a set of valid similarity results. 
+63 
+
+The algorithm used to measure similarity (see Figure 25) combines different 
+approaches depending on the type of field. For text attributes such as title, description, 
+moreInfo, or addresses, a preprocessing step is applied that includes converting text to 
+lowercase, removing special characters, and normalizing the format. Then, the 
+string-similarity library is used, which finds the degree of similarity between two strings, 
+based on Dice's Coefficient [23] distance to calculate a score between 0 and 1. 
+ 
+Figure 25: Code used to calculate score between properties. Source: Own elaboration. 
+64 
+
+On the other hand, for numeric attributes such as price, area, or nplanta, the 
+comparison is based on the difference relative to a high reference value, transforming 
+the difference into a proportion that is normalized on a scale where 1 represents perfect 
+equality and 0 represents complete dissimilarity. All these values are weighted 
+according to the predefined configuration to produce a final combined similarity score 
+(see Table 13). 
+Show all fields with their processes 
+Table 13: Fields, Methods, and Normalization implemented in the Process 
+Once the result is obtained, if the score exceeds a value of 0.8, the property is 
+considered sufficiently similar to be marked as a duplicate. These matches are stored 
+in the similarityMatrix collection, and if the score is higher than 0.9, the match is also 
+saved directly in the property document under the potentialDuplicates field. After the 
+process is completed, the date field of the similarityMatrix object is updated with the 
+current day's value. 
+Real Example 
+Below is a simplified example, based on real data, that illustrates how the process of 
+detecting similar properties works within the system.  
+Next, the data used in the example is presented, followed by the obtained results, 
+which are finally illustrated with images. 
+In this case, a new property is used as the starting point and compared with those 
+already stored in the database. Both the input data and the results automatically 
+generated from them are shown. 
+65 
+Field Method Normalization / Range 
+title string-similarity clean text 
+description string-similarity clean text 
+moreInfo string-similarity clean text 
+addresses string-similarity clean text 
+price absolute difference / 1x10
+6
+ 
+1 - diff / 1x10
+6
+ 
+area absolute difference / 500 1 - diff / 500 
+nhabitaciones absolute difference / 10 1 - diff / 10 
+nbaños absolute difference / 10 1 - diff / 10 
+nplanta absolute difference / 10 1 - diff / 10 
+añoConstruccion absolute difference / 100 1 - diff / 100 
+
+It focuses on ten key variables: title, description, moreInfo, address, price, area, 
+number of rooms, number of bathrooms, floor number, and year of construction, as 
+they are the main elements for the analysis. All these variables are compared using 
+different methods, depending on whether they are text or numerical values. 
+In this example, the values of the input property are as follows: 
+● title: "Casa o chalet independiente en venta en Can Teixido - Can Sors" 
+● description: "Esta magnífica propiedad está situada en una de las mejores 
+urbanizaciones del Maresme, Can Teixidó. A tan sólo 20 minutos de Barcelona, 
+5 minutos andando a la playa y a 10 min. en coche al colegio Internacional 
+Hamelin. La casa está construida sobre una parcela totalmente plana de 
+1.400m2 con jardín y piscina privados. Al entrar en la propiedad podemos 
+observar el excelente estado del jardín y los grandes árboles que tiene.  Con 
+sólo entrar en la casa podemos disfrutar de un amplio recibidor a dos alturas 
+con una gran escalera con baranda de hierro forjado a medida. La planta 
+principal tiene un agradable salón comedor con grandes ventanales que se 
+abren al jardín y por los cuales entra muchísima luz, cuenta también con un 
+salón más pequeño con chimenea que resulta estupendo para las noches de 
+invierno desde el cual se ven agradables atardeceres con vistas al mar y al 
+Skyline de Barcelona. La gran cocina office completamente equipada con mesa 
+para 8 comensales y conectada al jardín mediante grandes puertas correderas 
+que nos llevan al comedor exterior de verano y al porche. Además, esta planta 
+dispone de una habitación doble con baño completo ideal para invitados. 
+Anexo a la cocina dispone de una zona muy amplia de lavadero y habitación de 
+servicio con baño incluido y un aseo de cortesía. En la primera planta 
+encontramos la suite con grandes ventanales con vistas al mar y que cuenta 
+con un amplio vestidor y un baño completo más dos habitaciones dobles muy 
+grandes, todas ellas exteriores que comparten un gran baño. La propiedad 
+dispone de un garaje para tres coches y en esa misma planta tenemos otra 
+sala polivalente y un gran trastero." 
+● moreInfo: "Casa o chalet independiente  3 plantas  532 m² construidos, 453 m² 
+útiles  5 habitaciones  5 baños  Parcela de 1.204 m²  Terraza y balcón  Plaza de 
+garaje incluida en el precio  Segunda mano/buen estado  Armarios empotrados  
+Trastero  Orientación sur, este  Construido en 1997  Calefacción individual: Gas 
+natural" 
+● adress: "CL, LLAÜT, 3, 0, T, OD, OS, ALELLA, Barcelona, 8328" 
+66 
+
+● price: 2.450.000 € 
+● area: 532m² 
+● nhabitaciones: 5 
+● nbaños: 5 
+● nplantas: 3 
+● añoConstrucción: 1997 
+The property is compared with another property already existing in the database, 
+whose values   are: 
+● title: "Casa o chalet independiente en venta en Can Teixido - Can Sors" 
+● description: "Situada en una de las mejores zonas del Maresme dentro de un 
+residencial privado a 400 metros de la playa, se encuentra esta magnífica 
+propiedad de más de 500m2 construida por sus propietarios con mimo y 
+detalle. Asentada en una parcela de más de 1200m2 totalmente plana, la 
+propiedad está distribuida en 2 plantas principales donde la entrada principal 
+nos da acceso a un hall espectacular con techos de altura y grandes espacios. 
+La zona de día se abre desde todas las estancias al maravilloso jardín y 
+agradables porches desde donde ya se ve el mar azul de la magnífica costa 
+catalana. La zona de noche cuenta con una amplia suite con unas bonitas 
+vistas al mar y a la ciudad de Barcelona y otros 2 dormitorios dobles que 
+comparten un baño completo. Esta excepcional vivienda se completa con salas 
+adicionales de ocio o deporte, zona de servicio, dormitorio de invitados y un 
+gran garaje para varios vehículos. Rodeada de un encantador jardín con 
+grandes palmeras y rodeada de césped natural y arboles maduros que rodean 
+la casa, zona de barbacoa y una gran piscina privada de agua salina. Una 
+magnífica inversión para todo aquel que quiera ganar en calidad de vida y paz 
+sin desconectar de la maravillosa ciudad de Barcelona, es perfectamente 
+conectada por las principales autopistas y muy cerca de los mejores colegios 
+internacionales de la zona. ¿Te lo vas a perder?”  
+● moreInfo: "Casa o chalet independiente  3 plantas  532 m² construidos  5 
+habitaciones  4 baños  Parcela de 1.205 m²  Terraza y balcón  Plaza de garaje 
+incluida en el precio  Segunda mano/buen estado  Armarios empotrados  
+Trastero  Orientación sur, oeste  Construido en 1997  Calefacción individual" 
+● address: "CL, LLAÜT, 3, 0, T, OD, OS, ALELLA, Barcelona, 8328" 
+● price: 2.450.000 € 
+● area: 532m² 
+● nhabitaciones: 5 
+67 
+
+JSON
+JSON
+● nbaños: 4 
+● nplantas: 3 
+● añoConstrucción: 1997 
+The system applies the function shown in Figure 25. Once the comparison is done and 
+a similarity score is obtained for each variable, the weights assigned by SetHome in the 
+back office are applied: 
+ "weights": { 
+    "title": 0.05, 
+    "description": 0.1, 
+    "moreInfo": 0.1, 
+    "address": 0.1, 
+    "price": 0.15, 
+    "area": 0.2, 
+    "nhabitaciones": 0.05, 
+    "nbaños": 0.05, 
+    "nplanta": 0.05, 
+    "añoConstruccion": 0.15 
+  } 
+ 
+With these weights, the system gives more importance to fields such as area, price, 
+and year of construction, as they are considered more reliable for detecting duplicates. 
+Fields like title, description, or address complement the analysis but have less 
+influence. 
+After applying the similarity function, the system produces the following result: 
+{ 
+  "propertyId": "666a08abfe8f054e3f24822b", 
+  "score": 0.91 
+} 
+ 
+Since the score obtained is higher than 0.8, the system considers it a possible 
+duplicate property. This match is automatically stored in the similarityMatrix, in the 
+68 
+
+similarities field linked to the input property. In addition, since it is higher than 0.9, it is 
+also saved in the potentialDuplicates record of each property. 
+Below, you can see the new property (see Figure 26) and the property that was already 
+registered (see Figure 27), showing how they are the same listing advertised by two 
+companies. 
+ 
+Figure 26: The incoming property image. Source: Advertisement Idealista [24]. 
+ 
+Figure 27: Existing property image. Source: Advertisement Idealista [25]
+. 
+ 
+69 
+
+7. Testing 
+This section describes the tools used to verify and evaluate the functionality of the 
+different features developed throughout the project (see Figure 28). 
+ 
+Figure 28: Testing Process Flow. Source: Own elaboration. 
+7.1. Postman 
+This tool (see Figure 29) has been essential for the development of all functionalities 
+related to the endpoints. It is especially useful for verifying the system's behavior 
+without the need to have the backoffice management part implemented. 
+The following figure shows an example of a GET request to the property/:id endpoint, 
+where it can be seen how it returns the object corresponding to the property with the ID 
+67f599bb007e487ffac5e31d. 
+Although not shown in the image, another important aspect is security. Postman allows 
+manually adding the necessary cookies, which facilitates verifying the correct operation 
+of JWT token-based authentication. 
+70 
+
+ 
+Figure 29: Using Postman example. Source: Own elaboration. 
+7.2. Google Chrome 
+During the backoffice verification process, tools focused on analyzing and monitoring 
+the application's runtime behavior were used. In this regard, the Google Chrome 
+browser provided a suitable environment thanks to the features included in its 
+developer panel (see Figure 30). These tools allowed examining the code, inspecting 
+the HTML document structure, logging system messages through the console, and 
+reviewing requests made to the backend. 
+The following figure shows the flow of requests sent to the backend when loading the 
+properties screen, which is very useful for visualizing whether the information is 
+returned correctly or if there are communication issues with the server. 
+71 
+
+ 
+Figure 30: Using DevTools example. Source: Own elaboration. 
+ 
+7.3. Tests performed by SetHome 
+Throughout the entire development process, SetHome’s feedback has been essential, 
+as the client is best positioned to test the system and identify not only technical errors 
+but also usability and user experience issues. To streamline testing and obtain more 
+precise feedback, it was decided that the client would be responsible for conducting UX 
+tests. This way, they can evaluate whether the developed solution truly meets their 
+expectations and detect potential issues beyond just technical functionality. 
+Once the client completes the tests, they communicate any problems found so that 
+these can be analyzed and addressed, ensuring that the final product is as suitable and 
+functional as possible. 
+72 
+
+8. Project execution 
+This section analyzes various aspects related to the planning, execution, and 
+evaluation of the project. First, it describes the tracking carried out using the Asana 
+tool. Next, it examines the deviations from the initial plan, identifying their causes and 
+their impact on deadlines and costs. Finally, it evaluates the degree of compliance with 
+the functional and non-functional requirements defined at the beginning of the project, 
+classifying their level of achievement and justifying partially implemented requirements. 
+8.1. Task Tracking with Asana 
+Throughout the development of the project, Asana has been a key tool for task tracking 
+and management. Its use allowed for clear prioritization of activities that provided the 
+most value, facilitating making decisions based on the impact and urgency of each 
+task. 
+Additionally, Asana offered a global view of the project's status at all times, enabling 
+quick identification of progress and pending tasks. This visibility was crucial to 
+maintaining the initial planning. 
+Figure 31, shown below, is a screenshot representing an intermediate state of the 
+project in Asana, where the task organization can be observed. 
+ 
+Figure 31: Using Asana example. Source: Own elaboration. 
+ 
+73 
+
+8.2. Planning and Budget Changes 
+Table 14 shows the hours deviation and the final state of the project. Specifically the list 
+of planned initial tasks are included with the initially assigned hours, the final hours 
+used, and the status of each task. It can be seen that all tasks were completed despite 
+the challenges encountered. 
+Additionally, there was an increase of 10 hours in the total time spent on the project. 
+Below, the reason for this deviation is explained in detail, along with the problems 
+encountered and how they were resolved. 
+ 
+Description Initial Hour Final Hour State 
+PM1 - Define context and scope 24 24 Completed 
+PM2 - Define time planning 22 22 Completed 
+PM3 - Make budget and sustainability report 18 18 Completed 
+PM4 - Prepare final document 26 26 Completed 
+I1 - Requirement specification 15 15 Completed 
+I2 - Database design 8 8 Completed 
+I3 - Setup and learning service functionality 15 15 Completed 
+D1 - Selection of locations 6 6 Completed 
+D2 - Requesting Data from the Service and 
+Analysis 30 30 Completed 
+D3 - Storing the Data 8 8 Completed 
+P1 - Data normalization 40 40 Completed 
+C1 - Implement logic 40 46 Completed 
+V1 - Implement views to manage properties 18 18 Completed 
+V2 - Implement Functionality Related to Property 
+Addresses 12 12 Completed 
+V3 - Implement Modal to View Cadastre Data 18 18 Completed 
+V4 - Implement Component for Quick Property 
+View 20 22 Completed 
+V5 - Implement property filter 10 10 Completed 
+F1 - Assign users to properties 10 10 Completed 
+F2 - Add Button to Download Excel 25 25 Completed 
+F3 - Implementing functionality related to 
+managing property states 12 12 Completed 
+F4 - Implementation of Notifications for the User 12 12 Completed 
+74 
+
+A1 - Automate the process 20 20 Completed 
+A2 - Update downloading and cadastre data 4 6 Completed 
+DT - Documentation and tracking 120 120 Completed 
+MT - Meeting 7 7 Completed 
+Total hours of the project 540 550  
+Table 14:The project final deviation 
+ 
+Throughout the project, various difficulties and setbacks were encountered, leading to 
+delays in some planned tasks and requiring others to be redefined. Additionally, some 
+errors arose from a lack of experience, although these did not impact the established 
+timelines. The most significant issues that caused deviations were: 
+C1 - Change in the cadastral search strategy 
+This delay is related to the process of linking a property with its corresponding record in 
+the cadastre. Initially, the task was approached by searching for matches based on 
+locality, year of construction, and surface area. This approach produced some correct 
+matches, so it was decided to allow SetHome to test the algorithm. 
+Once their feedback was received, the results were analyzed. Although some matches 
+were acknowledged as correct, SetHome considered that the percentage of accurate 
+results was too low, so it was concluded that the algorithm needed to be modified. 
+A new algorithm was developed that considered locality, year of construction, surface 
+area (usable or built), and plot area. The new criteria required a mandatory match in 
+locality and at least two of the remaining three variables. 
+This required redoing the entire process to implement the new algorithm, which 
+resulted in approximately 6 additional hours of work for this task. 
+V4 - Add new functionality 
+This delay is related to the implementation of the side panel, designed to quickly 
+display the most relevant information about a property. In the first version, when it was 
+presented to SetHome, they pointed out the absence of an important feature: they 
+wanted to be able to modify the information directly from that view, as it involved 
+important data. 
+This required adjusting the component’s logic to allow in situ editing and automatically 
+save changes when the panel was closed. The adaptation only required about 2 
+75 
+
+additional hours of work, which were spent modifying the necessary fields and 
+implementing the save functionality. 
+A2 - Synchronization issue 
+This error is related to the import of new data from the cadastre. The functionality had 
+already been implemented before the start of the project, so it was only adapted to 
+trigger the download and linking process with the new data. 
+In the initial version, it was confirmed that the process executed correctly, but it wasn’t 
+verified whether the new imported data was being used, in other words, whether the 
+system was still using outdated cadastre data. 
+When SetHome tested the process, they noticed that after uploading new data, it 
+wasn’t being used. This became evident when, after updating the data and running the 
+process automatically the following day, new matches appeared when there shouldn't 
+have been any, since the update had taken place the day before. 
+After analyzing the issue, the root cause was identified as an incorrect execution order 
+of the update and import processes: the new data was being uploaded, but the system 
+began the update first, recovering the previous version. 
+Although the error was relatively simple, identifying it required reviewing the entire flow 
+and performing step-by-step debugging, which took approximately 2 additional hours of 
+work. 
+Below is a table similar to Table 15, which includes the columns "Deviation in hours" 
+and "Deviation in euros." This table shows how the final budget was organized and how 
+the 10 additional hours mentioned previously resulted in an extra cost of 272.69€. 
+The breakdown of these hours is as follows: 6 additional hours in the backend, 2 hours 
+and 30 minutes in the frontend, and 1 hour and 30 minutes dedicated to testing tasks. 
+ 
+Description Hour 
+Cost (€) Total (€) 
+Deviation (h) 
+Deviation (€) 
+PM1 - Define context and scope 24 560.16 
+2,100.60 0.00 0.00 
+PM2 - Define time planning 22 513.48 
+PM3 - Make budget and 
+sustainability report 18 420.12 
+PM4 - Prepare final document 26 606.84 
+I1 - Requirement specification 15 350.10 973.17 0.00 0.00 
+76 
+
+I2 - Database design 8 186.72 
+I3 - Setup and learning service 
+functionality 15 436.35 
+D1 - Selection of locations 6 158.28 
+1,234.95 0.00 0.00 
+D2 - Requesting Data from the 
+Service and Analysis 30 843.95 
+D3 - Storing the Data 8 232.72 
+P1 - Data normalization 40 1,163.60 1,163.60 0.00 0.00 
+C1 - Implement logic 46 1,338.14 1,338.14 6.00 174.54 
+V1 - Implement views to manage 
+properties 18 460.20 
+2,011.57 2.00 45.01 
+V2 - Implement Functionality 
+Related to Property Addresses 12 304.20 
+V3 - Implement Modal to View 
+Cadastre Data 18 457.11 
+V4 - Implement Component for 
+Quick Property View 22 551.03 
+V5 - Implement property filter 10 239.03 
+F1 - Assign users to properties 10 255.29 
+1,573.87 0.00 0.00 
+F2 - Add Button to Download Excel 25 697.82 
+F3 - Implementing functionality 
+related to managing property states 12 310.38 
+F4 - Implementation of Notifications 
+for the User 12 310.38 
+A1 - Automate the process 20 581.80 
+743.17 2.00 53.14 
+A2 - Update downloading and 
+cadastre data 6 161.37 
+DT - Documentation and tracking 120 2,946.39 2,946.39 0.00 0.00 
+MT - Meeting 7 682.08 682.08 0.00 0.00 
+Total hours of the project 550 
+ 
+ 
+ Total human cost of the project  14,767.54 
+Total deviation  10.00 272.69 
+Show the budget calculations 
+Table 15:  The budget project final deviation 
+8.3. Level of satisfaction of requirements 
+This section evaluates the level of achievement of the requirements defined at the 
+beginning of the project. First, the functional requirements are analyzed, with particular 
+attention given to the reasons why some were not achieved or were only partially 
+achieved. Subsequently, the non-functional requirements are reviewed following the 
+same approach. 
+77 
+
+It is important to note that three levels of achievement have been defined: completed, 
+partial, and not achieved. 
+● The completed level is assigned to those requirements that have been achieved 
+according to SetHome’s evaluation. 
+● The partial level corresponds to requirements that have been partially 
+implemented but are considered to have deficiencies by SetHome. 
+● The not achieved level refers to those requirements that, according to 
+SetHome’s assessment, have not been achieved. 
+Functional requirements 
+The vast majority of the requirements have been satisfied by SetHome, meeting what 
+was established in their description. However, there are two requirements that have not 
+been completed with the same level of success. 
+ 
+FR6 stated that all data should be manually validated before updating the database. 
+However, it was considered more efficient to apply this validation only to certain critical 
+fields, such as the address and potential duplicates. In this way, it is not necessary to 
+validate attributes like the number of bathrooms or the number of floors, as these are 
+theoretically constant values. If they change during the property’s follow-up, they can 
+always be manually corrected. 
+ 
+On the other hand, FR7 was intended to allow the reversal of manually introduced 
+errors. Although it is possible to modify a property as many times as needed, there is 
+no automatic history of previous values unless the user remembers and manually 
+re-enters them. In other words, if the number of bathrooms is changed and then one 
+wants to revert to the previous value, it will only be possible if that value is known. For 
+fields that have a history, such as price, it is possible to consult previous values. 
+However, when restoring a previous value, a new entry is generated in the history, 
+which can distort visualizations like price evolution charts. 
+ 
+It was decided not to implement a full versioning system because it would involve 
+storing a large amount of data for each property, which could exponentially multiply the 
+information over time, causing inefficiencies and increased complexity in data 
+management. 
+ 
+ 
+78 
+
+Code Description 
+Level of 
+achievement 
+FR1 
+The downloading process must be executed automatically at configurable intervals set 
+by the system administrator. 
+Completed 
+FR2 
+The application must allow comparing properties with cadastral data, requiring a 
+mandatory match on the locality and, 
+in addition, a match on at least two of the following attributes: construction year, 
+surface area, or parcel number. 
+Completed 
+FR3 
+When cadastral data is updated, the system must automatically compare the new 
+information with the existing records and 
+update them accordingly. 
+Completed 
+FR4 
+The interface must allow the user to define an error margin for data comparison 
+between loading and cadastral records. 
+Completed 
+FR5 
+The interface must include a section where the user can view and correct detected 
+data errors. 
+Completed 
+FR6 
+The user must be able to validate and manually approve changes before updating the 
+database. 
+Partial 
+FR7 
+The system must allow the reversal of changes in case a manual correction introduces 
+errors. 
+Not achieved 
+FR8 
+The interface must display a table with key property data, including reference, name, 
+property type, location, price, 
+surface area, address, advertiser, and creation date. 
+Completed 
+FR9 It must enable the display of associated images within the table. Completed 
+FR10 The interface must include action buttons (for example: editing, deleting). Completed 
+FR11 
+The interface must include an advanced filtering system, allowing users to search for 
+properties by reference, title, price, 
+surface area, property type, year of construction, status, location, advertiser type, and 
+assigned user. 
+Completed 
+FR12 
+Filters must be applicable in combination and should include sorting options 
+(ascending/descending) for different attributes. 
+Completed 
+FR13 The system must allow selecting all properties that match the applied filters. Completed 
+Table 16: Levels of achievement of functional requirements 
+ 
+ 
+Non-Functional requirements 
+Regarding the non-functional requirements, only NFR4 could not be achieved. This 
+requirement stated that, if the processed data arrived with a different structure, for 
+example, if the field was previously called nBaños and is now called numeroBaños, the 
+system should be able to adapt automatically. It also considered the possibility of 
+automatically incorporating new fields if additional information was provided in the data. 
+ 
+79 
+
+Regarding changes in nomenclature, no simple solution has been found to effectively 
+implement this adaptability. Since this is the first version of the system, it was decided 
+not to invest additional resources in a problem that is not considered a short-term 
+priority. 
+ 
+On the other hand, in cases where new information is added, it is not incorporated 
+automatically. However, thanks to the use of a database like MongoDB, it is possible to 
+easily modify the structure of the documents to store new fields when necessary. 
+ 
+Code Description 
+Level of 
+achievement 
+NFR1 The user must be able to access the information with the fewest clicks Completed 
+NFR2 Data must be accessible during business hours (9am - 8pm) Completed 
+NFR3 It must be possible to launch the downloading process every 24 hours Completed 
+NFR4 
+It must be able to adapt to changes in the distribution of information 
+returned 
+Not achieved 
+Table 17: Levels of achievement of non-functional requirements 
+80 
+
+9. Legal aspects 
+In this project, it is essential to consider legal aspects related to data protection, the 
+use of external services, and the licenses of the technologies used.  
+9.1. Laws applicable to the project 
+The system stores information about properties and users, which involves the 
+processing of potentially personal data provided by an external service and, therefore, 
+its use must be responsible and compliant with current legislation. 
+The data used comes from two external sources: one external company providing data 
+on real estate advertisements, and another that provides cadastral data. In both cases, 
+the data have been employed exclusively for the purpose of analyzing the real estate 
+market. The use of these data complies fully with all applicable regulations in Spain, 
+and their use is legally permitted for market analysis purposes. 
+The regulations related to data protection to take into account are: 
+● REGULATION (EU) 2016/679 OF THE EUROPEAN PARLIAMENT AND OF 
+THE COUNCIL of April 27, 2016 relative to the protection of natural persons 
+with regard to the processing of personal data and to the free circulation of this 
+data and by which Directive 95/46/EC (Regulation general data protection).[26] 
+● Spanish Organic Law 3/2018, of December 5, on the protection of personal 
+data and guarantee of digital rights. 
+In these laws the limitations stated are: 
+● In case of importing personal data, report it or consider anonymizing the 
+information. In fact, the data that is used and captured in this project from 
+external services do not include personal data that allow the identification of 
+people.  
+● The purpose has to be legitimate. One of the possible uses is market analysis.  
+● Do not collect more data than the necessary and nor sensitive data. During the 
+project it was decided the data to be collected in order to not include sensitive 
+information.  
+The regulations regarding external services. The company in which the author of this 
+project works has carefully considered all relevant legal and regulatory requirements 
+regarding the use of external data services. Contracts with the external company 
+81 
+
+include clear terms on data ownership, usage rights, and confidentiality. Additionally, 
+compliance with data protection laws, including the GDPR, has been included in the 
+contract. Also, measures have also been taken to verify the quality and reliability of the 
+data, as well as to maintain its security throughout the import process. Finally, the 
+limitations about the use of the data has been also included in the contracts.  
+9.2. Licenses 
+The project uses open-source technologies, each subject to its own license. These 
+licenses generally allow free use of the tools as long as their terms and conditions are 
+respected. In this case, there are no direct limitations, since the project is not being 
+distributed commercially. 
+The user interface has been developed using React, and the server with Node.js, both 
+under the MIT [27] license, which allows free use, modification, and distribution of the 
+code.  
+The database used is MongoDB, which is licensed under the SSPL [28], a license that 
+permits unrestricted internal use but imposes stricter conditions if the software is 
+offered as a service to third parties. Since the system developed is going to be used 
+internally these stricter conditions do not apply. 
+ 
+ 
+82 
+
+10. Sustainability 
+After conducting the test on environmental knowledge within my professional sector, I 
+have been able to identify areas where I have more expertise and those where I need 
+to deepen my knowledge. Regarding the social, economic, and environmental issues 
+facing today's society, I believe I have a fairly general understanding of the situation, 
+but not a thorough knowledge of their specific effects on my professional field. 
+One of the areas where I feel I lack the most knowledge is the environmental impact of 
+the products and services within my sector. I do not have a strong understanding of the 
+factors that contribute to pollution, emissions, or waste generation in relation to my 
+profession. Therefore, I should seek more information on what these factors are and 
+how to reduce this impact in order to incorporate more sustainable practices into my 
+work. 
+On the other hand, I have also realized that I have not paid much attention to the 
+relationship between my professional activities and health, safety, and social justice. 
+There are many aspects, such as accessibility, equality, and transparency, that I have 
+overlooked until now, but I believe it is important to integrate them more into my way of 
+working. 
+In contrast, I feel more confident in the economic aspect. I am familiar with tools and 
+methods to assess the economic viability of projects and manage resources efficiently. 
+This enables me to make informed decisions and optimize the processes I work on. 
+Overall, this exercise has helped me see that, while I have a solid foundation in 
+economic management, I need to deepen my knowledge in areas related to 
+sustainability and social impact. I believe that improving in these areas will allow me to 
+have a more balanced and responsible perspective on my work 
+10.1. Economic 
+Reflection on the cost you have estimated for the completion of the project 
+To estimate the cost of the project, personnel costs, material resources, contingencies, 
+and incidents have been taken into account. All of this is based on the estimation of the 
+working hours required to complete each task. It has been calculated that the project 
+will cost 14,494.85€, of which 10% is allocated to unforeseen events. I consider this to 
+be a very reasonable cost given the characteristics of the project to be developed. 
+83 
+
+How are currently solved economic issues related to the problem that you want 
+to address? 
+Currently, the problem is addressed by using queries in an Excel sheet containing all 
+the properties registered in the cadastre and comparing the results one by one with the 
+listings on the platform. This process is time-consuming and requires a significant 
+investment of working hours by employees. 
+How will your solution improve economic issues with respect to other existing 
+solutions? 
+This solution automates the process and facilitates data visualization, significantly 
+reducing all economic expenses related to the property selection process. (Having an 
+employee review an Excel sheet generates two types of costs: on one hand, their 
+salary, and on the other, electricity consumption.) 
+ 
+10.2. Environmental 
+Have you estimated the environmental impact of the project? 
+ 
+A detailed estimation of the project's environmental impact has not been carried out. 
+However, it is evident that the manual process of an employee detecting a new 
+property on a platform, checking if it is already registered, and, if not, searching for it in 
+the cadastre Excel file until it is found, is much more energy-intensive than a 
+downloading process. 
+ 
+Did you plan to minimize its impact, for example, by reusing resources? 
+ 
+Yes, by carrying out the project in a coworking space, resources such as screens are 
+reused among different companies. On the other hand, at the programming level, the 
+project could be implemented with just two roles: a project manager and a full-stack 
+programmer. This way, four laptops would not be needed, reducing future waste 
+generated once these devices reach the end of their useful life. 
+ 
+How is currently solved the problem that you want to address? And how will 
+your solution improve the environment with respect to other existing solutions? 
+ 
+84 
+
+Currently, environmental issues in computing are often addressed by using renewable 
+energy and reusing material resources. That said, the environmental improvement 
+offered by this project is related to the usage time of these material resources, as 
+reducing processing times leads to lower energy consumption. 
+ 
+10.3. Social 
+What do you think you will achieve -in terms of personal growth- from doing this 
+project? 
+ 
+This project will provide me with hands-on experience in developing automated 
+systems. Additionally, it will enhance my project management skills, as I will need to 
+coordinate tasks, resources, and time to meet the objectives. It will also help me better 
+understand client needs and how to deliver technological solutions that add value to 
+their businesses. 
+ 
+How is currently solved the problem that you want to address? And how will your 
+solution improve the quality of life with respect to other existing solutions? 
+ 
+Currently, the problem is addressed by investing more hours of workers' time in a 
+tedious process, such as comparing data. Therefore, the solution proposed by this 
+project is to make employees' work easier by eliminating these repetitive and 
+mechanical tasks, allowing them to focus on more rewarding tasks that make them feel 
+more fulfilled. 
+ 
+Is there a real need for the project? 
+ 
+Yes, there is a real need for the project. The SetHome agency requires a solution that 
+enables it to carry out more efficient and detailed market analysis. By automating the 
+data processing and integrating it with its internal systems, the agency will be able to 
+identify trends, compare property characteristics more effectively, and generate more 
+competitive and well-informed offers. This improved analytical capacity will support 
+better strategic decision-making and allow the company to adapt more quickly to 
+changes in the real estate market. 
+ 
+85 
+
+11. Conclusions and future work 
+This chapter presents the conclusions of the project, addressing the technical skills 
+developed during the project, as well as the connection between the work and the 
+degree and specialization. Additionally, it reflects on the personal experiences and 
+lessons learned, and proposes possible future lines of work that could continue and 
+improve the project. 
+11.1. Technical skills worked on 
+CES1.1: To develop, maintain and evaluate complex and/or critical software 
+systems and services. Throughout the development of the project, various skills 
+related to the field of software engineering have been applied. Regarding the CES1.1 
+competency, work has been done on the development and maintenance of a software 
+system of a certain level of complexity, focused on properties management and 
+analysis. Although it is not a critical system, it has been necessary to carry out careful 
+planning and to ensure the reliability and proper functioning of the different components 
+implemented. Among them, the construction of a module for processing and 
+normalizing properties data provided by an external service, as well as a system for the 
+automatic detection of duplicate properties, based on a similarity analysis between 
+attributes such as title, address, price, or area.         
+CES1.5: To specify, design, implement and evaluate databases. On the other hand, 
+the CES1.5 competency has played a particularly important role, since a fundamental 
+part of the project has involved adapting, designing, and implementing new collections 
+in a MongoDB database. This database stores key information for the system, such as 
+properties, cadastre data, configurations, and similarity matrices. Throughout the 
+development, decisions have been made regarding the structure of the documents, 
+including the representation of each property's evolution history and the linking 
+between properties and assigned users. In addition, aspects related to query efficiency 
+have been evaluated by adding indexes to the critical collections. 
+CES1.2: To solve integration problems in function of the strategies, standards 
+and available technologies and CES2.1: To define and manage the requirements 
+of a software system. Regarding competencies CES2.1 and CES1.2, related 
+respectively to requirements definition and management, and to the integration of 
+software components. Although the system started with a good initial definition, it was 
+necessary to refine the requirements together with the client (SetHome). Specific 
+86 
+
+aspects were defined more precisely, such as the linking between the cadastre and 
+properties, or the comparison criteria between properties. To meet these requirements, 
+technologies were integrated, such as string comparison libraries, or the client was 
+given the freedom to choose the strategy. 
+11.2. TFG’s connection to the degree and 
+specialization 
+ 
+This section evaluates the contributions that the courses from the degree and the 
+specialization in Software Engineering have provided to the development of this 
+project. 
+First, it was necessary to carry out a requirements analysis and evaluate the market 
+environment, as well as the existence of tools that could already cover the desired 
+functionalities. To perform this task, the courses in Requirements Engineering (ER) and 
+Software Architecture (AS) were essential, as they made it possible to properly 
+structure the data, define use cases, and document the system in a clear and 
+organized way. 
+Secondly, it was essential to plan the project and select an appropriate working 
+methodology. In this regard, the courses Software Project Management (GPS) and 
+Software Engineering Project (PES) were key, as they provided the necessary 
+knowledge to organize the development efficiently. 
+Thirdly, the project faced complex data processing tasks, which required writing 
+optimized queries, using indexes, and parallelizing the code to improve performance. 
+To overcome these challenges, the contents of Parallel Computing (PAR), Database 
+Design (DBD), and Programming Project (PROP) were crucial. 
+Fourthly, a REST API and its corresponding web interface were developed to cover the 
+required functionalities. In this case, the courses Web Applications and Services 
+(ASW), Interaction and Interface Design (IDI), and once again PES were especially 
+useful due to their practical and multidisciplinary approach. 
+Finally, it is worth noting that courses like Information Systems Concepts (CSI) have 
+also been very helpful, even though they do not focus directly on the technical aspects 
+of development. This course provided a greater understanding of the business, which 
+was essential when planning features with the client’s needs in mind. Thanks to this, 
+87 
+
+better alignment was achieved between the company’s (SetHome) needs and the 
+proposed technical solutions, reaching effective agreements in an agile manner. 
+ 
+11.3. Personal conclusions 
+As the developer of this project, it has been very rewarding to see how, starting from an 
+initial lack of experience with technologies like React.js, Node.js, and MongoDB, I have 
+been able to successfully complete a functional, usable, and technically complete 
+system. Throughout the development, I learned how to manage a real project, 
+understand the client’s needs properly, and turn them into effective solutions. This 
+process allowed me to consolidate the knowledge acquired during my studies and to 
+see how many of those academic foundations can be applied in a professional 
+environment, even if they sometimes need to be adapted. 
+However, it is important to recognize that the original idea of the project has been 
+partially surpassed by the emergence of new technologies, especially generative 
+artificial intelligence. Nowadays, this kind of tool allows the processing of large volumes 
+of information in a contextualized way, adapting to format and language, and offering 
+more accurate and flexible responses than those obtained through traditional string 
+comparison methods. 
+The client, Owius, and I agree that the project could evolve into an AI-based solution, 
+which would significantly increase its reliability by reducing dependence on the input 
+data format and solving issues caused by the variability of natural language. In 
+addition, technologies such as image-based search or semantic processing would 
+bring substantial added value to the tool. 
+Although the project met the functional requirements defined at the beginning, the rapid 
+progress of the sector has changed the client's focus toward more innovative solutions. 
+As a result, the developed product has taken a back seat, not due to a lack of quality, 
+but because of a technological paradigm shift. It may seem frustrating that such 
+extensive work does not lead to a long-term solution, but this is a reality inherent to the 
+world of software development, especially in a context of constant technological 
+disruption. 
+From a personal perspective, this project has been a very valuable experience. It has 
+allowed me to work with modern technologies, face real challenges, and better 
+88 
+
+understand the dynamics between client, developer, and product. It has been a key 
+step in my development as an engineer. 
+ 
+11.4. Future work 
+For a possible future development of the project, the next natural step would be to turn 
+the tool into an intelligent platform capable of processing and analyzing properties 
+using artificial intelligence models. Below are some key ideas that could shape the 
+future roadmap: 
+● Smart processing of input data 
+Use language models such as Llama or similar to interpret and standardize 
+property descriptions, regardless of language, structure, or format, allowing 
+better normalization and semantic understanding of the data. 
+● Advanced semantic comparison 
+Replace string similarity-based systems with embeddings and machine learning 
+models that understand the meaning behind the descriptions, eliminating 
+inconsistencies in property comparison. 
+● Existing interface as a solid foundation 
+Take advantage of the interface already developed in React.js as a starting 
+point, integrating AI modules without the need to completely redesign the 
+system. 
+This approach would not only update the project to current standards, but also position 
+it as a competitive and innovative tool within the sector. Despite everything, the project 
+still has great potential, as long as it is approached with an open mindset toward the 
+integration of new technologies. 
+ 
+89 
+
+References 
+ 
+[1]  Idealista. | datos.gob.es. (22/02/2025)[online]. 
+https://datos.gob.es/es/casos-exito/idealista 
+[2] El municipio en cifras. Alella (Maresme). | Idescat. (22/02/2025)[online]. 
+https://www.idescat.cat/emex/?id=080039&lang=es 
+[3] Cadastre | Dictionary Cambridge. (05/04/2025)[online]. 
+https://dictionary.cambridge.org/dictionary/english/cadastre 
+[4] Kanban en el desarrollo de software | ClockKanban. (23/02/2025)[online] 
+https://clockkanban.com/es/kanban-en-el-desarrollo-de-software-mejores-practi
+cas/ 
+[5] Gestión del trabajo. | Slack. (23/02/2025)[online] 
+https://slack.com/intl/es-es 
+[6] Gestiona las tareas de tu equipo en línea | Asana. (23/02/2025)[online] 
+https://asana.com/es 
+[7] Git solution for teams using Jira. | Bitbucket. (23/02/2025)[online] 
+https://bitbucket.org/product/ 
+[8]  Salario en España - Salario Medio. | Talent.com. (07/03/2025)[online] 
+ https://es.talent.com/salary 
+[9] Nuestros planes y precios de coworking | Cloudworks. (07/03/2025)[online] 
+https://wearecloudworks.com/plan/ 
+[10] Portátil HP | HP Store España. (07/03/2025)[online] 
+https://www.hp.com/es-es/shop/product.aspx?id=7P6V8EA&opt=ABE&sel=NTB 
+[11] ¿Cuántos días laborables en el año 2025? | (07/03/2025)[online] 
+https://www.dias-laborables.es/cuantos_dias_laborables_en_ano_2025_Catalu
+%C3%B1a.htm 
+[12] Functional requirements examples and templates | Jama Software  
+(18/03/2025)[online] 
+https://www.jamasoftware.com/requirements-management-guide/writing-require
+ment 
+[13] What is a virtual private server (VPS)? | Google Cloud.(18/05/2025)[online] 
+https://cloud.google.com/learn/what-is-a-virtual-private-server 
+[14] OVHCloud. | OVHcloud. (18/05/2025)[online] 
+https://www.ovhcloud.com/en/ 
+[15] What is NGinx? | Kinsta.(18/05/2025)[online]  
+https://kinsta.com/knowledgebase/what-is-nginx/ 
+90 
+
+[16] SPA (Single-page application) | MDN Web Docs. (18/05/2025)[online]  
+https://developer.mozilla.org/en-US/docs/Glossary/SPA 
+[17] MongoDB | MongoDB. (18/05/2025)[online]  
+https://www.mongodb.com/ 
+[18]  MVC Design pattern | GeeksforGeeks. (18/05/2025)[online]  
+https://www.geeksforgeeks.org/mvc-design-pattern/ 
+[19] Don’t repeat yourself(DRY)  | GeeksforGeeks. (18/05/2025)[online]  
+https://www.geeksforgeeks.org/dont-repeat-yourselfdry-in-software-developmen
+t/?ref=next_article 
+[20] Admin template | Metronic by Keenthemes. (18/05/2025)[online]  
+https://keenthemes.com/metronic 
+[21] Dumb & smart components in React | Medium.(18/05/2025)[online]  
+https://medium.com/@abubakarmemon/dumb-smart-components-in-react-0d19
+e2653398 
+[22] Casa en venta en urbanización exclusiva Can Teixidó | Premium Houses.  
+(07/06/2025)[online] 
+https://www.premiumhouses.es/alella/casa-en-venta-urbanizacion-exclusiva-ca
+n-teixido-con-vistas-al-mar-y-al-skyline-de-barcelona 
+[23] Dice-Sørensen coefficient | Wikipedia. (16/06/2025)[online] 
+https://en.wikipedia.org/wiki/Dice-S%C3%B8rensen_coefficient 
+[24] Casa o chalet independiente en venta en Can Teixido-Can Sors | idealista.com 
+ (07/06/2025)[online] 
+https://www.idealista.com/inmueble/88419780/ 
+[25] Casa o chalet independiente en venta en Can Teixido-Can Sors | idealista.com 
+ (07/06/2025)[online] 
+https://www.idealista.com/inmueble/40123885/ 
+[26] Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo. 
+(04/05/2016)[en línea] 
+https://www.boe.es/doue/2016/119/L00001-00088.pdf 
+[27] The MIT license.  | Open Source Initiative.(18/05/2025)[online]  
+https://opensource.org/license/mit 
+[28] Server Side Public License (SSPL). | MongoDB (18/05/2025)[online]  
+https://www.mongodb.com/legal/licensing/server-side-public-license 
+ 
+91 
+
+JavaScript
+Appendixes 
+ 
+export async function detectLocalidad(ubicacion, titulo, localidades) { 
+  const words = Array.from( 
+    new Set( 
+      ubicacion 
+        ?.replace(/\d+/g, "") 
+        .normalize("NFD") 
+        .replace(/[\u0300-\u036f]/g, "") 
+        .split(/(?<!^)(?=[A-Z])|\s+/) 
+        .map((word) => word.toLowerCase()) 
+        .concat( 
+          titulo 
+            ?.replace(/\d+/g, "") 
+            .normalize("NFD") 
+            .replace(/[\u0300-\u036f]/g, "") 
+            .split(/(?<!^)(?=[A-Z])|\s+/) 
+            .map((word) => word.toLowerCase()) 
+        ) 
+    ) 
+  ).filter((item) => item); 
+ 
+  let maxSimilarity = -1; 
+  let mostSimilarLocalidad = null; 
+  let matchesTotales = {}; 
+  localidades.forEach((localidad) => { 
+    if (localidad.takeIntoAccount) { 
+      matchesTotales[localidad.fullName] = 0; 
+    } 
+  }); 
+  words.forEach((word) => { 
+    localidades.forEach((localidad) => { 
+      if (localidad.takeIntoAccount) { 
+        let localidadesDivFullName = localidad.fullName 
+          ?.normalize("NFD") 
+          .replace(/[\u0300-\u036f]/g, "") 
+          .split(/(?<!^)(?=[A-Z])|\s+/); 
+        let similarity = 0; 
+        localidadesDivFullName.forEach((localidadDiv) => { 
+          similarity = calculateSimilarityStrings( 
+            word, 
+            localidadDiv.toLowerCase() 
+          ); 
+          matchesTotales[localidad.fullName] += similarity; 
+        }); 
+      } 
+92 
+
+JavaScript
+    }); 
+  }); 
+  for (const key in matchesTotales) { 
+    if (matchesTotales.hasOwnProperty(key)) { 
+      let localidadesDivFullName = key?.split(/(?<!^)(?=[A-Z])|\s+/); 
+      matchesTotales[key] = matchesTotales[key] / 
+localidadesDivFullName.length; 
+    } 
+  } 
+  for (const [localidad, similarity] of Object.entries(matchesTotales)) 
+{ 
+    if (similarity > maxSimilarity) { 
+      maxSimilarity = similarity; 
+      mostSimilarLocalidad = localidades.find( 
+        (loca) => loca.fullName === localidad 
+      ); 
+    } 
+  } 
+ 
+  if (mostSimilarLocalidad === null || mostSimilarLocalidad === "") { 
+    mostSimilarLocalidad = localidades[0]; 
+  } 
+ 
+  return mostSimilarLocalidad; 
+} 
+ 
+// Helper function to calculate similarity between strings 
+export function calculateSimilarityStrings(str1, str2) { 
+  let matches = 0; 
+ 
+  for (let i = 0; i < str1.length && i < str2.length; i++) { 
+    if (str1[i] === str2[i]) matches++; 
+  } 
+  let aux = matches / Math.max(str1.length, str2.length); 
+  return aux == 1; 
+} 
+Figure 1 Appendix:  Code to link locations with properties. Source: Own elaboration. 
+ 
+ 
+export async function findSimilarCadastralProperties(data) { 
+  const config = await getConfiguration(); 
+  const añoConstruccionError = config.errorFactors.añoConstruccionError; 
+  const parcelaError = config.errorFactors.parcelaError; 
+93 
+
+  let lista = []; 
+  // Normalize input data 
+  const localidad = data.localidad 
+    ?.toUpperCase() 
+    .normalize("NFD") 
+    .replace(/[\u0300-\u036f]/g, ""); 
+  const checkStreet = localidad?.checkStreet ? localidad.checkStreet : 
+false; 
+  const area = parseFloat(data.area); 
+ 
+  let areaError; 
+  if (area % 10 === 0) areaError = config.errorFactors.areaErrorIfExact; 
+  else areaError = config.errorFactors.areaError; 
+  const añoConstruccion = parseInt(data.añoConstruccion, 10); 
+  const street = data.street; // We'll normalize the street name in the 
+findBestStreetMatch function 
+  let superficieConstruida = parseInt(data.construidos, 10); 
+  let superficieUtil = parseInt(data.utiles, 10); 
+  let parcela = parseInt(data.parcela, 10); 
+ 
+  let possibleMatches = []; 
+  let encontrado = false; 
+  // 1. Municipio + Año + Superficie Construida + Parcela 
+  if ( 
+    !encontrado && 
+    localidad && 
+    añoConstruccion && 
+    superficieConstruida && 
+    parcela 
+  ) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      nombreMunicipio: localidad, 
+      anoAntiguedadBienInmueble: añoConstruccion, 
+      superficieElementosConstructivos: superficieConstruidaInt, 
+      superficieAsociadaInmueble: parcelaInt, 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 2. Municipio + Año + Superficie Útil + Parcela 
+  if ( 
+    !encontrado && 
+94 
+
+    localidad && 
+    añoConstruccion && 
+    superficieUtil && 
+    parcela 
+  ) { 
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      nombreMunicipio: localidad, 
+      anoAntiguedadBienInmueble: añoConstruccion, 
+      superficieElementosConstructivos: superficieUtilInt, 
+      superficieAsociadaInmueble: parcelaInt, 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 3. Municipio + Año + Superficie Construida 
+  if (!encontrado && localidad && añoConstruccion && 
+superficieConstruida) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+    const condicion = { 
+      nombreMunicipio: localidad, 
+      anoAntiguedadBienInmueble: añoConstruccion, 
+      superficieElementosConstructivos: superficieConstruidaInt, 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 4. Municipio + Año + Superficie Útil 
+  if (!encontrado && localidad && añoConstruccion && superficieUtil) { 
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+ 
+    const condicion = { 
+      nombreMunicipio: localidad, 
+      anoAntiguedadBienInmueble: añoConstruccion, 
+      superficieElementosConstructivos: superficieUtilInt, 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+95 
+
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 5. Municipio + Año + Parcela 
+  if (!encontrado && localidad && añoConstruccion && parcela) { 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      nombreMunicipio: localidad, 
+      anoAntiguedadBienInmueble: añoConstruccion, 
+      superficieAsociadaInmueble: parcelaInt, 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 6. Municipio + Superficie Construida + Parcela 
+  if (!encontrado && localidad && superficieConstruida && parcela) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      nombreMunicipio: localidad, 
+      superficieElementosConstructivos: superficieConstruidaInt, 
+      superficieAsociadaInmueble: parcelaInt, 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+ 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 7. Municipio + Superficie Útil + Parcela 
+  if (!encontrado && localidad && superficieUtil && parcela) { 
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      nombreMunicipio: localidad, 
+      superficieElementosConstructivos: superficieUtilInt, 
+      superficieAsociadaInmueble: parcelaInt, 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+96 
+
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 8. Municipio + Año error + Superficie Construida + Parcela 
+  if ( 
+    !encontrado && 
+    añoConstruccionError > 0 && 
+    localidad && 
+    añoConstruccion && 
+    superficieConstruida && 
+    parcela 
+  ) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieElementosConstructivos: superficieConstruidaInt, 
+          superficieAsociadaInmueble: parcelaInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion - añoConstruccionError, 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion + añoConstruccionError, 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+97 
+
+ 
+  // 9. Municipio + Año error + Superficie Útil + Parcela 
+  if ( 
+    !encontrado && 
+    localidad && 
+    añoConstruccion && 
+    añoConstruccionError > 0 && 
+    superficieUtil && 
+    parcela 
+  ) { 
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieElementosConstructivos: superficieUtilInt, 
+          superficieAsociadaInmueble: parcelaInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion - añoConstruccionError, 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion + añoConstruccionError, 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 10. Municipio + Año error + Superficie Construida 
+  if ( 
+98 
+
+    !encontrado && 
+    localidad && 
+    añoConstruccion && 
+    añoConstruccionError > 0 && 
+    superficieConstruida 
+  ) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieElementosConstructivos: superficieConstruidaInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion - añoConstruccionError, 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion + añoConstruccionError, 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 11. Municipio + Año error + Superficie Útil 
+  if ( 
+    !encontrado && 
+    localidad && 
+    añoConstruccion && 
+    añoConstruccionError > 0 && 
+    superficieUtil 
+  ) { 
+99 
+
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieElementosConstructivos: superficieUtilInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion - añoConstruccionError, 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion + añoConstruccionError, 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 12. Municipio + Año error + Parcela 
+  if ( 
+    !encontrado && 
+    localidad && 
+    añoConstruccion && 
+    añoConstruccionError > 0 && 
+    parcela 
+  ) { 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieAsociadaInmueble: parcelaInt, 
+100 
+
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion - añoConstruccionError, 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion + añoConstruccionError, 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 13. Municipio + Superficie Construida error + Parcela 
+  if ( 
+    !encontrado && 
+    localidad && 
+    superficieConstruida && 
+    areaError > 0 && 
+    parcela 
+  ) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+ 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieAsociadaInmueble: parcelaInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+101 
+
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieConstruidaInt * (1 - areaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieConstruidaInt * (1 + areaError / 100), 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+ 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 14. Municipio + Superficie Útil error + Parcela 
+  if (!encontrado && localidad && superficieUtil && areaError > 0 && 
+parcela) { 
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+ 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieAsociadaInmueble: parcelaInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieUtilInt * (1 - areaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+102 
+
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieUtilInt * (1 + areaError / 100), 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+ 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 15. Municipio + Año  + Superficie Construida error + Parcela 
+  if ( 
+    !encontrado && 
+    areaError > 0 && 
+    localidad && 
+    añoConstruccion && 
+    superficieConstruida && 
+    parcela 
+  ) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          anoAntiguedadBienInmueble: añoConstruccion, 
+          superficieAsociadaInmueble: parcelaInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieConstruidaInt * (1 - areaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieConstruidaInt * (1 + areaError / 100), 
+103 
+
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 16. Municipio + Año + Superficie Útil error + Parcela 
+  if ( 
+    !encontrado && 
+    areaError > 0 && 
+    localidad && 
+    añoConstruccion && 
+    superficieUtil && 
+    parcela 
+  ) { 
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          anoAntiguedadBienInmueble: añoConstruccion, 
+          superficieAsociadaInmueble: parcelaInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieUtilInt * (1 - areaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieUtilInt * (1 + areaError / 100), 
+                ], 
+              }, 
+            ], 
+104 
+
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 17. Municipio + Año + Superficie Construida error 
+  if ( 
+    !encontrado && 
+    areaError > 0 && 
+    localidad && 
+    añoConstruccion && 
+    superficieConstruida 
+  ) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+ 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          anoAntiguedadBienInmueble: añoConstruccion, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieConstruidaInt * (1 - areaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieConstruidaInt * (1 + areaError / 100), 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+105 
+
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 18. Municipio + Año + Superficie Útil error 
+  if ( 
+    !encontrado && 
+    areaError > 0 && 
+    localidad && 
+    añoConstruccion && 
+    superficieUtil 
+  ) { 
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          anoAntiguedadBienInmueble: añoConstruccion, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieUtilInt * (1 - areaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$superficieElementosConstructivos" }, 
+                  superficieUtilInt * (1 + areaError / 100), 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+106 
+
+  // 19. Municipio + Año + Parcela error 
+  if ( 
+    !encontrado && 
+    localidad && 
+    añoConstruccion && 
+    parcelaError > 0 && 
+    parcela 
+  ) { 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          anoAntiguedadBienInmueble: añoConstruccion, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieAsociadaInmueble" }, 
+                  parcelaInt * (1 - parcelaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$anoAntiguedadBienInmueble" }, 
+                  añoConstruccion * (1 + parcelaError / 100), 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 20. Municipio + Superficie Construida  + Parcela error 
+  if ( 
+    !encontrado && 
+    localidad && 
+    superficieConstruida && 
+    parcelaError > 0 && 
+107 
+
+    parcela 
+  ) { 
+    const superficieConstruidaInt = parseInt(data.construidos, 10); 
+ 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieElementosConstructivos: superficieConstruidaInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieAsociadaInmueble" }, 
+                  parcelaInt * (1 - parcelaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$superficieAsociadaInmueble" }, 
+                  parcelaInt * (1 + parcelaError / 100), 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+ 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+ 
+  // 21. Municipio + Superficie Útil  + Parcela error 
+  if ( 
+    !encontrado && 
+    localidad && 
+    superficieUtil && 
+    parcelaError > 0 && 
+    parcela 
+  ) { 
+    const superficieUtilInt = parseInt(data.utiles, 10); 
+108 
+
+ 
+    const parcelaInt = parseInt(data.parcela, 10); 
+    const condicion = { 
+      $and: [ 
+        { 
+          nombreMunicipio: localidad, 
+          superficieElementosConstructivos: superficieUtilInt, 
+        }, 
+        { 
+          $expr: { 
+            $and: [ 
+              { 
+                $gte: [ 
+                  { $toInt: "$superficieAsociadaInmueble" }, 
+                  parcelaInt * (1 - parcelaError / 100), 
+                ], 
+              }, 
+              { 
+                $lte: [ 
+                  { $toInt: "$superficieAsociadaInmueble" }, 
+                  parcelaInt * (1 + parcelaError / 100), 
+                ], 
+              }, 
+            ], 
+          }, 
+        }, 
+      ], 
+    }; 
+    lista.push(JSON.stringify(condicion)); 
+ 
+    possibleMatches = await CadastralProperty.find(condicion); 
+    if (possibleMatches.length > 0) { 
+      encontrado = true; 
+    } 
+  } 
+  if (possibleMatches.length === 0) { 
+    return { references: [], addresses: [] }; // Return an empty array 
+if no matches are found 
+  } 
+ 
+  let filteredMatches = possibleMatches; 
+ 
+  // Map to reference catastral and addresses 
+  const references = filteredMatches.map( 
+    (property) => property.referenciaCatastral 
+  ); 
+  const addresses = filteredMatches.map((property) => { 
+    const parts = [ 
+109 
+
+JavaScript
+      property.tipoViaSiglaPublica, 
+      property.nombreViaPublica, 
+      property.primerNumeroPolicia, 
+      property.primeraLetra || "", 
+      property.segundoNumeroPolicia || "", 
+      property.segundaLetra || "", 
+      property.bloque || "", 
+      property.escalera || "", 
+      property.planta || "", 
+      property.puerta || "", 
+      property.nombreMunicipio, 
+      property.nombreProvincia, 
+      property.codigoPostal, 
+    ] 
+      .filter((part) => part !== "") 
+      .join(", "); 
+ 
+    return parts; 
+  }); 
+ 
+  return { references, addresses}; 
+} 
+Figure 2 Appendix:  Code to link cadastre with properties. Source: Own elaboration. 
+ 
+ 
+const numCPUs = os.cpus().length; 
+ 
+const poolSize = Math.max(1, Math.floor(numCPUs)); 
+ 
+const pool = new WorkerPool( 
+  path.resolve(__dirname, "similarityWorker.js"), 
+  poolSize 
+); 
+class WorkerPool extends EventEmitter { 
+  constructor(workerPath, poolSize) { 
+    super(); 
+    this.workerPath = workerPath; 
+    this.poolSize = poolSize; 
+    this.workers = []; 
+    this.idleWorkers = []; 
+    this.taskQueue = []; 
+ 
+    this.init(); 
+110 
+
+  } 
+ 
+  init() { 
+    for (let i = 0; i < this.poolSize; i++) { 
+      this.createWorker(); 
+    } 
+  } 
+ 
+  createWorker() { 
+    const worker = new Worker(this.workerPath); 
+ 
+    worker.on("message", (msg) => { 
+      const { resolve, reject } = worker.currentTask; 
+      if (msg.error) { 
+        reject(new Error(msg.error)); 
+      } else { 
+        resolve(msg.result); 
+      } 
+      worker.currentTask = null; 
+      this.idleWorkers.push(worker); 
+      this.runNext(); 
+    }); 
+ 
+    worker.on("error", (err) => { 
+      if (worker.currentTask) { 
+        const { reject } = worker.currentTask; 
+        reject(err); 
+      } 
+      this.workers = this.workers.filter((w) => w !== worker); 
+      this.createWorker(); 
+    }); 
+ 
+    worker.on("exit", (code) => { 
+      if (code !== 0) { 
+        console.error(`Worker terminado con código de salida ${code}`); 
+      } 
+      if (worker.currentTask) { 
+        const { reject } = worker.currentTask; 
+        reject(new Error(`Worker terminó con código de salida 
+${code}`
+)); 
+      } 
+      this.workers = this.workers.filter((w) => w !== worker); 
+      this.createWorker(); 
+    }); 
+ 
+    this.workers.push(worker); 
+    this.idleWorkers.push(worker); 
+  } 
+111 
+
+ 
+  runTask(task) { 
+    return new Promise((resolve, reject) => { 
+      const worker = this.idleWorkers.shift(); 
+      if (worker) { 
+        worker.currentTask = { resolve, reject }; 
+        worker.postMessage(task); 
+      } else { 
+        this.taskQueue.push({ task, resolve, reject }); 
+      } 
+    }); 
+  } 
+ 
+  runNext() { 
+    if (this.taskQueue.length === 0) return; 
+    const worker = this.idleWorkers.shift(); 
+    if (worker) { 
+      const { task, resolve, reject } = this.taskQueue.shift(); 
+      worker.currentTask = { resolve, reject }; 
+      worker.postMessage(task); 
+    } 
+  } 
+ 
+  async close() { 
+    for (const worker of this.workers) { 
+      await worker.terminate(); 
+    } 
+    this.workers = []; 
+    this.idleWorkers = []; 
+    this.taskQueue = []; 
+  } 
+} 
+Figure 3 Appendix:  Code to create a WorkerPool. Source: Own elaboration. 
+112
